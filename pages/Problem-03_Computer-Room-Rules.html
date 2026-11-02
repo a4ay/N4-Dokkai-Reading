@@ -1,307 +1,126 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Problem-02_Party-Invitation-Email</title>
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #1e293b;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --ruby-color: #dc2626;
-      --hover-bg: #f1f5f9;
-      --note-border: #f59e0b;
-      --note-bg: #fffdf5;
-
-      --correct-bg: #dcfce7;
-      --correct-border: #22c55e;
-      --correct-text: #15803d;
-      --wrong-bg: #fee2e2;
-      --wrong-border: #ef4444;
-      --wrong-text: #b91c1c;
-    }
-
-    body {
-      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      padding: 40px 20px;
-      margin: 0;
-    }
-
-    .container {
-      max-width: 720px;
-      width: 100%;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 32px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-    }
-
-    h1 {
-      font-size: 1.35rem;
-      margin-top: 0;
-      color: #0f172a;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 12px;
-    }
-
-    .instructions {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    button.btn-ctrl {
-      background: #e2e8f0;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-
-    button.btn-ctrl:hover {
-      background: #cbd5e1;
-    }
-
-    .reading-box {
-      font-size: 1.25rem;
-      line-height: 2.8;
-    }
-
-    .note-box {
-      background: var(--note-bg);
-      border-left: 4px solid var(--note-border);
-      padding: 18px 22px;
-      margin: 20px 0;
-      border-radius: 0 8px 8px 0;
-    }
-
-    .meta-signer {
-      text-align: right;
-      margin-top: 14px;
-      font-weight: bold;
-    }
-
-    ruby.furigana-word {
-      cursor: pointer;
-      user-select: none;
-      border-radius: 4px;
-      padding: 2px 3px;
-      transition: background-color 0.15s ease;
-    }
-
-    ruby.furigana-word:hover {
-      background-color: var(--hover-bg);
-    }
-
-    ruby.furigana-word rt {
-      visibility: hidden;
-      opacity: 0;
-      color: var(--ruby-color);
-      font-size: 0.65em;
-      font-weight: bold;
-      transition: opacity 0.18s ease-in-out;
-    }
-
-    ruby.furigana-word.revealed rt {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .question-section {
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px dashed var(--border);
-    }
-
-    .question-title {
-      font-size: 1.15rem;
-      font-weight: bold;
-      margin-bottom: 16px;
-      line-height: 2.4;
-    }
-
-    .options-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .option-item {
-      padding: 12px 16px;
-      background: var(--bg);
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 1.05rem;
-      line-height: 2.2;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .option-item:hover:not(.locked) {
-      background: var(--hover-bg);
-      border-color: #cbd5e1;
-    }
-
-    .option-item.correct {
-      background-color: var(--correct-bg) !important;
-      border-color: var(--correct-border) !important;
-      color: var(--correct-text) !important;
-      font-weight: bold;
-    }
-
-    .option-item.wrong {
-      background-color: var(--wrong-bg) !important;
-      border-color: var(--wrong-border) !important;
-      color: var(--wrong-text) !important;
-    }
-
-    .option-item.locked {
-      cursor: default;
-    }
-
-    .quiz-feedback {
-      display: none;
-      margin-top: 16px;
-      padding: 14px 18px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      line-height: 1.8;
-    }
-
-    .quiz-feedback.show {
-      display: block;
-    }
-
-    .quiz-feedback.correct {
-      background: var(--correct-bg);
-      border: 1px solid var(--correct-border);
-      color: var(--correct-text);
-    }
-
-    .quiz-feedback.wrong {
-      background: var(--wrong-bg);
-      border: 1px solid var(--wrong-border);
-      color: var(--wrong-text);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Problem 03 — Computer Room Rules</title>
+<style>
+:root{
+ --bg:#f8fafc;--card-bg:#fff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;
+ --ruby-color:#dc2626;--hover-bg:#f1f5f9;--frame-border:#94a3b8;--frame-bg:#fff;
+ --gutter-text:#94a3b8;--correct-bg:#dcfce7;--correct-border:#22c55e;--correct-text:#15803d;
+ --wrong-bg:#fee2e2;--wrong-border:#ef4444;--wrong-text:#b91c1c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}
+.container{max-width:720px;margin:28px auto;padding:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 28px rgba(15,23,42,.05)}
+.type-tag{font-size:.9rem;color:var(--text-muted);font-weight:700;letter-spacing:.04em}
+.problem-title{font-size:1.55rem;font-weight:800;margin:6px 0 12px}
+.instruction{font-size:1rem;line-height:1.8;margin:0}
+.passage{position:relative;margin-top:24px}
+.lead-in{font-size:1.2rem;line-height:2.8;margin:0 0 8px;position:relative;padding-right:36px}
+.doc-frame{border:1.5px solid var(--frame-border);background:var(--frame-bg);padding:14px 20px 18px;position:relative}
+.doc-title{text-align:center;font-size:1.2rem;line-height:2.8;font-weight:700}
+.glyph-list{list-style:none;margin:0;padding:0}
+.glyph-list li{font-size:1.18rem;line-height:2.25;padding-left:1.1em;text-indent:-1.1em;margin:0 0 3px;position:relative}
+.ln{position:absolute;right:-55px;top:0;width:28px;text-align:center;color:var(--gutter-text);font-size:.82rem;line-height:2.8}
+.question-section{border-top:1px dashed var(--border);margin-top:30px;padding-top:22px}
+.question-title{font-size:1.15rem;font-weight:800;line-height:2;margin-bottom:12px}
+.options{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.option-item{border:2px solid var(--border);border-radius:8px;padding:10px 14px;font-size:1.08rem;line-height:1.9;cursor:pointer;transition:background .15s,border-color .15s}
+.option-item:hover:not(.locked){background:var(--hover-bg)}
+.option-item.correct{background:var(--correct-bg);border-color:var(--correct-border);color:var(--correct-text)}
+.option-item.wrong{background:var(--wrong-bg);border-color:var(--wrong-border);color:var(--wrong-text)}
+.option-item.locked{cursor:default;pointer-events:none}
+.quiz-feedback{display:none;margin-top:14px;padding:14px 16px;border-radius:8px;background:#f1f5f9;line-height:1.9}
+.quiz-feedback.show{display:block}
+.kotoba-box{margin-top:28px;border:1px solid var(--border);border-radius:8px;padding:16px 18px}
+.kotoba-tag{display:inline-block;border:1px solid var(--text);border-radius:4px;padding:2px 12px;font-weight:800;margin-bottom:12px}
+.kotoba-list{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px}
+.kotoba-item{font-size:1.05rem;font-weight:700}
+.gloss{display:block;color:var(--text-muted);font-size:.9rem;font-weight:400;margin-top:2px}
+ruby.furigana-word{user-select:none;ruby-position:over}
+ruby.furigana-word rt{visibility:hidden;opacity:0;color:var(--ruby-color);font-size:.65em;font-weight:bold;transition:opacity .18s ease-in-out}
+ruby.furigana-word.revealed rt{visibility:visible;opacity:1}
+.controls{display:flex;gap:10px;justify-content:flex-end;margin:14px 0 0}
+button{border:1px solid var(--border);background:#fff;color:var(--text);padding:8px 13px;border-radius:7px;font-size:.9rem;cursor:pointer}
+button:hover{background:var(--hover-bg)}
+.footer-note{color:var(--text-muted);font-size:.82rem;margin-top:18px}
+@media(max-width:600px){.container{margin:0;padding:22px 18px;border-radius:0}.doc-frame{padding:12px 14px}.ln{right:-28px}.glyph-list li{font-size:1.02rem}.kotoba-list{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
+<main class="container">
+<header class="problem-header">
+ <div class="type-tag">短文3（注意<ruby class="furigana-word">書<rt>か</rt></ruby>き）</div>
+ <div class="problem-title">もんだい3</div>
+ <p class="instruction">次の<ruby class="furigana-word">文章<rt>ぶんしょう</rt></ruby>を<ruby class="furigana-word">読<rt>よ</rt></ruby>んで、<ruby class="furigana-word">質問<rt>しつもん</rt></ruby>に<ruby class="furigana-word">答<rt>こた</rt></ruby>えてください。答えは、1・2・3・4からいちばんいいものを1つ<ruby class="furigana-word">選<rt>えら</rt></ruby>んでください。</p>
+</header>
 
-  <div class="container">
-    <h1>もんだい 2 (p. 18)</h1>
-    <div class="instructions">
-      💡 <strong>Tip:</strong> 漢字をダブルクリックするとふりがなが表示されます。<br>
-      選択肢をクリックして答えを確認できます。(Click an option to check your answer).
-    </div>
+<section class="passage">
+ <p class="lead-in"><span class="ln" data-ln="1"></span><ruby class="furigana-word">学校<rt>がっこう</rt></ruby>のコンピューター<ruby class="furigana-word">室<rt>しつ</rt></ruby>のドアに、<ruby class="furigana-word">下<rt>した</rt></ruby>のような<ruby class="furigana-word">紙<rt>かみ</rt></ruby>がはってあります。</p>
+ <div class="doc-frame">
+  <div class="doc-title">コンピューター<ruby class="furigana-word">室<rt>しつ</rt></ruby>を<ruby class="furigana-word">使<rt>つか</rt></ruby>う<ruby class="furigana-word">人<rt>ひと</rt></ruby>へ</div>
+  <ul class="glyph-list">
+   <li>・<ruby class="furigana-word">部屋<rt>へや</rt></ruby>が<ruby class="furigana-word">使<rt>つか</rt></ruby>える<ruby class="furigana-word">時間<rt>じかん</rt></ruby>は、<ruby class="furigana-word">月曜日<rt>げつようび</rt></ruby>から<ruby class="furigana-word">金曜日<rt>きんようび</rt></ruby>は9時から21時までです。<ruby class="furigana-word">土曜日<rt>どようび</rt></ruby>は9時から18時までです。<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>・<ruby class="furigana-word">祝日<rt>しゅくじつ</rt></ruby>は<ruby class="furigana-word">入<rt>はい</rt></ruby>れません。</li>
+   <li><span class="ln" data-ln="5"></span>・パソコンか<ruby class="furigana-word">携帯電話<rt>けいたいでんわ</rt></ruby>でパソコンを<ruby class="furigana-word">使<rt>つか</rt></ruby>う<ruby class="furigana-word">日時<rt>にちじ</rt></ruby>と<ruby class="furigana-word">時間<rt>じかん</rt></ruby>を<ruby class="furigana-word">予約<rt>よやく</rt></ruby>してから、<ruby class="furigana-word">利用<rt>りよう</rt></ruby>してください。</li>
+   <li>・<ruby class="furigana-word">授業<rt>じゅぎょう</rt></ruby>と<ruby class="furigana-word">関係<rt>かんけい</rt></ruby>ないものを<ruby class="furigana-word">印刷<rt>いんさつ</rt></ruby>しないでください。</li>
+   <li>・ここでご<ruby class="furigana-word">飯<rt>はん</rt></ruby>を<ruby class="furigana-word">食<rt>た</rt></ruby>べたり、<ruby class="furigana-word">飲<rt>の</rt></ruby>み<ruby class="furigana-word">物<rt>もの</rt></ruby>を<ruby class="furigana-word">飲<rt>の</rt></ruby>んだりしないでください。</li>
+   <li>・ここでゲームをしてはいけません。</li>
+  </ul>
+ </div>
+</section>
 
-    <div class="controls">
-      <button class="btn-ctrl" id="showAllBtn">すべてのふりがなを表示 (Show All)</button>
-      <button class="btn-ctrl" id="hideAllBtn">すべてのふりがなを隠す (Hide All)</button>
-    </div>
+<section class="question-section">
+ <div class="question-block" data-q="1">
+  <div class="question-title">問い　<ruby class="furigana-word">月曜日<rt>げつようび</rt></ruby>にコンピューター<ruby class="furigana-word">室<rt>しつ</rt></ruby>でしてもいいことは<ruby class="furigana-word">何<rt>なに</rt></ruby>ですか。</div>
+  <ul class="options">
+   <li class="option-item" data-correct="true">1. <ruby class="furigana-word">夜<rt>よる</rt></ruby>8時まで<ruby class="furigana-word">日本語<rt>にほんご</rt></ruby>の<ruby class="furigana-word">作文<rt>さくぶん</rt></ruby>を<ruby class="furigana-word">書<rt>か</rt></ruby>き、<ruby class="furigana-word">印刷<rt>いんさつ</rt></ruby>します。</li>
+   <li class="option-item" data-correct="false">2. <ruby class="furigana-word">勉強<rt>べんきょう</rt></ruby>のため、<ruby class="furigana-word">夜<rt>よる</rt></ruby>9時まで<ruby class="furigana-word">友<rt>とも</rt></ruby>だちと<ruby class="furigana-word">日本語<rt>にほんご</rt></ruby>のゲームをします。</li>
+   <li class="option-item" data-correct="false">3. パソコンが<ruby class="furigana-word">空<rt>あ</rt></ruby>いていたら、<ruby class="furigana-word">予約<rt>よやく</rt></ruby>なしで<ruby class="furigana-word">夜<rt>よる</rt></ruby>7時まで<ruby class="furigana-word">使<rt>つか</rt></ruby>います。</li>
+   <li class="option-item" data-correct="false">4. <ruby class="furigana-word">夜<rt>よる</rt></ruby>8時半までコーヒーを<ruby class="furigana-word">飲<rt>の</rt></ruby>みながら<ruby class="furigana-word">日本語<rt>にほんご</rt></ruby>の<ruby class="furigana-word">勉強<rt>べんきょう</rt></ruby>をします。</li>
+  </ul>
+  <div class="quiz-feedback" aria-live="polite"></div>
+ </div>
+</section>
 
-    <div class="reading-box">
-      <p>
-        <ruby class="furigana-word">友<rt>とも</rt></ruby>だちの<ruby class="furigana-word">山下<rt>やました</rt></ruby>さんからシーナさんにメールが来ました[cite: 5]。
-      </p>
+<aside class="kotoba-box">
+ <span class="kotoba-tag">ことば</span>
+ <div class="kotoba-list">
+  <div class="kotoba-item"><ruby class="furigana-word">祝日<rt>しゅくじつ</rt></ruby><span class="gloss">Public holiday</span></div>
+  <div class="kotoba-item"><ruby class="furigana-word">携帯電話<rt>けいたいでんわ</rt></ruby><span class="gloss">Mobile phone</span></div>
+  <div class="kotoba-item"><ruby class="furigana-word">予約<rt>よやく</rt></ruby>する<span class="gloss">To make a reservation</span></div>
+  <div class="kotoba-item"><ruby class="furigana-word">利用<rt>りよう</rt></ruby>する<span class="gloss">To use</span></div>
+  <div class="kotoba-item"><ruby class="furigana-word">印刷<rt>いんさつ</rt></ruby>する<span class="gloss">To print</span></div>
+  <div class="kotoba-item">ゲーム<span class="gloss">(Computer) game</span></div>
+ </div>
+</aside>
 
-      <div class="note-box">
-        シーナさん<br><br>
-        こんにちは。山下です。[cite: 5]<br>
-        私は 4 月 10 日 (<ruby class="furigana-word">日<rt>にち</rt></ruby>) に、ふじ<ruby class="furigana-word">公園<rt>こうえん</rt></ruby>のフリーマーケットで<ruby class="furigana-word">店<rt>みせ</rt></ruby>を<ruby class="furigana-word">出<rt>だ</rt></ruby>します。[cite: 5]<br>
-        フリーマーケットでは、<ruby class="furigana-word">自分<rt>じぶん</rt></ruby>が<ruby class="furigana-word">作<rt>つく</rt></ruby>った<ruby class="furigana-word">物<rt>もの</rt></ruby>や<ruby class="furigana-word">要<rt>い</rt></ruby>らない<ruby class="furigana-word">物<rt>もの</rt></ruby>を<ruby class="furigana-word">売<rt>う</rt></ruby>ることができます。[cite: 5]<br>
-        シーナさんも<ruby class="furigana-word">一緒<rt>いっしょ</rt></ruby>に<ruby class="furigana-word">参加<rt>さんか</rt></vspace>しませんか。[cite: 5]<br>
-        シーナさんが<ruby class="furigana-word">作<rt>つく</rt></ruby>った<ruby class="furigana-word">人形<rt>にんぎょう</rt></ruby>を、<ruby class="furigana-word">私<rt>わたし</rt></ruby>の<ruby class="furigana-word">店<rt>みせ</rt></vspace>で<ruby class="furigana-word">売<rt>う</rt></vspace>るのはどうですか。[cite: 5]<br>
-        それから、シーナさんはお<ruby class="furigana-word">皿<rt>さら</rt></ruby>や<ruby class="furigana-word">服<rt>ふく</rt></ruby>などが<ruby class="furigana-word">欲<rt>ほ</rt></ruby>しいと言っていましたね。[cite: 5]<br>
-        ここに来れば、いい物が安い値段で買えるかもしれません。[cite: 5]<br><br>
-        <ruby class="furigana-word">都合<rt>つごう</rt></ruby>はいかがですか。[cite: 5]<br>
-        お<ruby class="furigana-word">返事<rt>へんじ</rt></ruby>を<ruby class="furigana-word">待<rt>ま</rt></ruby>っています。[cite: 5]
-        <div class="meta-signer">山下[cite: 5]</div>
-      </div>
-    </div>
-
-    <!-- Question Section -->
-    <div class="question-section">
-      <div class="question-title">
-        <strong>【<ruby class="furigana-word">問<rt>と</rt></ruby>い】</strong> <ruby class="furigana-word">山下<rt>やました</rt></ruby>さんはシーナさんにフリーマーケットで<ruby class="furigana-word">何<rt>なに</rt></ruby>をしようと言っていますか。[cite: 5]
-      </div>
-
-      <ul class="options-list">
-        <li class="option-item" data-correct="false">1. シーナさんが<ruby class="furigana-word">要<rt>い</rt></ruby>らないお<ruby class="furigana-word">皿<rt>さら</rt></ruby>や<ruby class="furigana-word">服<rt>ふく</rt></ruby>を<ruby class="furigana-word">売<rt>う</rt></ruby>ります[cite: 5]。</li>
-        <li class="option-item" data-correct="true">2. シーナさんが<ruby class="furigana-word">作<rt>つく</rt></ruby>った<ruby class="furigana-word">人形<rt>にんぎょう</rt></ruby>を<ruby class="furigana-word">売<rt>う</rt></ruby>ります[cite: 5]。</li>
-        <li class="option-item" data-correct="false">3. <ruby class="furigana-word">山下<rt>やました</rt></ruby>さんの<ruby class="furigana-word">店<rt>みせ</rt></ruby>で<ruby class="furigana-word">人形<rt>にんぎょう</rt></ruby>を<ruby class="furigana-word">作<rt>つく</rt></ruby>ります[cite: 5]。</li>
-        <li class="option-item" data-correct="false">4. シーナさんが<ruby class="furigana-word">要<rt>い</rt></ruby>らない<ruby class="furigana-word">物<rt>もの</rt></ruby>を<ruby class="furigana-word">欲<rt>ほ</rt></ruby>しい<ruby class="furigana-word">人<rt>ひと</rt></ruby>にあげます[cite: 5]。</li>
-      </ul>
-
-      <div class="quiz-feedback" id="quizFeedback"></div>
-    </div>
-  </div>
-
-  <script>
-    // Double-click furigana reveal toggle
-    const rubyElements = document.querySelectorAll('ruby.furigana-word');
-    rubyElements.forEach(ruby => {
-      ruby.addEventListener('dblclick', (e) => {
-        e.stopPropagation();
-        ruby.classList.toggle('revealed');
-      });
-    });
-
-    // Bulk toggle controls
-    document.getElementById('showAllBtn').addEventListener('click', () => {
-      rubyElements.forEach(r => r.classList.add('revealed'));
-    });
-    document.getElementById('hideAllBtn').addEventListener('click', () => {
-      rubyElements.forEach(r => r.classList.remove('revealed'));
-    });
-
-    // Interactive Quiz Logic
-    const explanationText = "山下さんはメールで「シーナさんが作った人形を、私の店で売るのはどうですか」と提案しています。したがって、正解は2番です。";
-    const optionItems = document.querySelectorAll('.option-item');
-    const feedbackBox = document.getElementById('quizFeedback');
-
-    optionItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const isCorrect = item.getAttribute('data-correct') === 'true';
-
-        if (isCorrect) {
-          item.classList.add('correct');
-          feedbackBox.className = 'quiz-feedback show correct';
-          feedbackBox.innerHTML = `<strong>正解！ (Correct!)</strong><br>${explanationText}`;
-        } else {
-          item.classList.add('wrong');
-          optionItems.forEach(opt => {
-            if (opt.getAttribute('data-correct') === 'true') {
-              opt.classList.add('correct');
-            }
-          });
-          feedbackBox.className = 'quiz-feedback show wrong';
-          feedbackBox.innerHTML = `<strong>残念！ (Incorrect)</strong><br>${explanationText}`;
-        }
-
-        optionItems.forEach(opt => opt.classList.add('locked'));
-      });
-    });
-  </script>
+<div class="controls">
+ <button id="showAllBtn" type="button">Show All Furigana</button>
+ <button id="hideAllBtn" type="button">Hide All Furigana</button>
+</div>
+<p class="footer-note">Tip: Double-click an individual kanji word to show or hide its reading.</p>
+</main>
+<script>
+const explanations = {
+ "1": "正解は1です。<ruby class="furigana-word">月曜日<rt>げつようび</rt></ruby>から<ruby class="furigana-word">金曜日<rt>きんようび</rt></ruby>は21時までコンピューター<ruby class="furigana-word">室<rt>しつ</rt></ruby>を使えます。1は<ruby class="furigana-word">夜<rt>よる</rt></ruby>8時までなので、<ruby class="furigana-word">利用<rt>りよう</rt></ruby><ruby class="furigana-word">時間<rt>じかん</rt></ruby>内です。また、<ruby class="furigana-word">授業<rt>じゅぎょう</rt></ruby>と<ruby class="furigana-word">関係<rt>かんけい</rt></ruby>がある<ruby class="furigana-word">日本語<rt>にほんご</rt></ruby>の<ruby class="furigana-word">作文<rt>さくぶん</rt></ruby>なら<ruby class="furigana-word">印刷<rt>いんさつ</rt></ruby>できます（<ruby class="furigana-word">利用<rt>りよう</rt></ruby><ruby class="furigana-word">時間<rt>じかん</rt></ruby>は注意<ruby class="furigana-word">書<rt>か</rt></ruby>きの最初の項目、<ruby class="furigana-word">印刷<rt>いんさつ</rt></ruby>については3つ目の項目）。2はゲームをしてはいけないと書いてあるので不可です（最後の項目）。3は、<ruby class="furigana-word">使<rt>つか</rt></ruby>う<ruby class="furigana-word">日時<rt>にちじ</rt></ruby>と<ruby class="furigana-word">時間<rt>じかん</rt></ruby>を<ruby class="furigana-word">予約<rt>よやく</rt></ruby>してから<ruby class="furigana-word">利用<rt>りよう</rt></ruby>する必要があるので不可です（2つ目の項目）。4は、<ruby class="furigana-word">飲<rt>の</rt></ruby>み<ruby class="furigana-word">物<rt>もの</rt></ruby>を飲んではいけないので不可です（4つ目の項目）。"
+};
+document.querySelectorAll('ruby.furigana-word').forEach(node=>node.addEventListener('dblclick',()=>node.classList.toggle('revealed')));
+document.getElementById('showAllBtn').addEventListener('click',()=>document.querySelectorAll('ruby.furigana-word').forEach(n=>n.classList.add('revealed')));
+document.getElementById('hideAllBtn').addEventListener('click',()=>document.querySelectorAll('ruby.furigana-word').forEach(n=>n.classList.remove('revealed')));
+document.querySelectorAll('.question-block').forEach(block=>{
+ const q=block.dataset.q, feedback=block.querySelector('.quiz-feedback');
+ block.querySelectorAll('.option-item').forEach(option=>option.addEventListener('click',()=>{
+  if(block.classList.contains('answered'))return;
+  const ok=option.dataset.correct==='true';
+  option.classList.add(ok?'correct':'wrong');
+  if(!ok)block.querySelector('[data-correct="true"]').classList.add('correct');
+  block.querySelectorAll('.option-item').forEach(item=>item.classList.add('locked'));
+  feedback.textContent=(ok?'正解です。':'残念。不正解です。')+explanations[q];
+  feedback.classList.add('show');block.classList.add('answered');
+ }));
+});
+</script>
 </body>
 </html>
