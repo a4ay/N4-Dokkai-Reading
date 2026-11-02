@@ -3,5 +3,6 @@
 // Naming: Problem-<number>_<Title-With-Dashes>.html
 const PAGES = [
   "Problem-01_Jorge-DVD-Return.html",
+  "Problem-03_Computer-Room-Rules.html",
   "Problem-10_Lisa-Office-Souvenir.html"
 ];
