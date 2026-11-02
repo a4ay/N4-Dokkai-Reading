@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Problem 04 — Text Explanation</title>
+<style>
+:root {
+  --bg:#f8fafc; --card-bg:#fff; --text:#1e293b; --text-muted:#64748b;
+  --border:#e2e8f0; --ruby-color:#dc2626; --hover-bg:#f1f5f9;
+  --note-border:#f59e0b; --note-bg:#fffdf5; --frame-border:#94a3b8;
+  --frame-bg:#fff; --arrow:#475569; --gutter-text:#94a3b8;
+  --correct-bg:#dcfce7; --correct-border:#22c55e; --correct-text:#15803d;
+  --wrong-bg:#fee2e2; --wrong-border:#ef4444; --wrong-text:#b91c1c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}
+.container{max-width:720px;margin:32px auto;padding:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;box-shadow:0 4px 18px rgba(15,23,42,.04)}
+.problem-header{margin-bottom:24px}
+.type-tag{display:inline-block;font-size:.8rem;color:var(--text-muted);border-bottom:2px solid var(--border);margin-bottom:8px}
+.problem-title{font-weight:bold;font-size:1.15rem}
+.instruction{font-size:1rem;line-height:1.9;margin:4px 0 0}
+.passage{position:relative;padding-right:2.75rem;font-size:1.25rem;line-height:2.8}
+.reading-box p{text-indent:1em;margin:0}
+.ln{display:inline}
+.ln::after{content:attr(data-ln);position:absolute;right:.25rem;font-size:.75rem;line-height:3.5rem;color:var(--gutter-text);user-select:none;pointer-events:none}
+ruby.furigana-word{user-select:none;cursor:pointer;ruby-position:over}
+ruby.furigana-word rt{visibility:hidden;opacity:0;color:var(--ruby-color);font-size:.65em;font-weight:bold;transition:opacity .18s ease-in-out}
+ruby.furigana-word.revealed rt{visibility:visible;opacity:1}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 22px}
+button{border:1px solid var(--border);background:#fff;color:var(--text);padding:8px 13px;border-radius:7px;cursor:pointer;font-size:.9rem}
+button:hover{background:var(--hover-bg)}
+.question-section{border-top:1px dashed var(--border);margin-top:32px;padding-top:24px}
+.question-title{font-size:1.15rem;font-weight:bold;margin-bottom:12px}
+.options{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.option-item{border:2px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;transition:background .15s,border-color .15s}
+.option-item:hover:not(.locked){background:var(--hover-bg)}
+.option-item.correct{background:var(--correct-bg);border-color:var(--correct-border);color:var(--correct-text)}
+.option-item.wrong{background:var(--wrong-bg);border-color:var(--wrong-border);color:var(--wrong-text)}
+.option-item.locked{cursor:default;pointer-events:none}
+.quiz-feedback{display:none;margin-top:14px;padding:12px 14px;border-radius:8px;background:var(--hover-bg);line-height:1.8}
+.quiz-feedback.show{display:block}
+.kotoba-box{margin-top:28px}
+.kotoba-tag{display:inline-block;border:1.5px solid var(--text);border-radius:6px;padding:0 10px;font-weight:bold}
+.kotoba-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 24px;line-height:2.4;margin-top:8px}
+.kotoba-item .gloss{color:var(--text-muted);font-size:.9rem;margin-left:.75em}
+@media(max-width:600px){.container{margin:0;padding:22px 18px;border-radius:0}.passage{font-size:1.12rem;padding-right:2rem}}
+</style>
+</head>
+<body>
+<main class="container">
+  <header class="problem-header">
+    <div class="type-tag">短文4（説明文）</div>
+    <div class="problem-title">もんだい4</div>
+    <p class="instruction">次の文章を読んで、質問に答えてください。答えは、1・2・3・4から、いちばんいいものを1つ選んでください。</p>
+  </header>
+
+  <div class="controls" aria-label="Furigana controls">
+    <button type="button" id="showAllBtn">Show All Furigana</button>
+    <button type="button" id="hideAllBtn">Hide All Furigana</button>
+  </div>
+
+  <section class="passage">
+    <div class="reading-box">
+      <p><span class="ln" data-ln="1"></span><ruby class="furigana-word">東京<rt>とうきょう</rt></ruby>から<ruby class="furigana-word">電車<rt>でんしゃ</rt></ruby>で1<ruby class="furigana-word">時間<rt>じかん</rt></ruby>ぐらいの<ruby class="furigana-word">所<rt>ところ</rt></ruby>に、<ruby class="furigana-word">鎌倉<rt>かまくら</rt></ruby>という<ruby class="furigana-word">町<rt>まち</rt></ruby>があります。<ruby class="furigana-word">鎌倉<rt>かまくら</rt></ruby>には<ruby class="furigana-word">高<rt>たか</rt></ruby>さ11メートルの<ruby class="furigana-word">大仏<rt>だいぶつ</rt></ruby><span class="note-ref">(注1)</span>があります。<ruby class="furigana-word">大仏<rt>だいぶつ</rt></ruby>が<ruby class="furigana-word">作<rt>つく</rt></ruby>られたときは<ruby class="furigana-word">建物<rt>たてもの</rt></ruby>の<ruby class="furigana-word">中<rt>なか</rt></ruby>にありましたが、<ruby class="furigana-word">今<rt>いま</rt></ruby>は<ruby class="furigana-word">建物<rt>たてもの</rt></ruby>がありません。どうして<ruby class="furigana-word">建物<rt>たてもの</rt></ruby>がなくなったのでしょうか。<ruby class="furigana-word">台風<rt>たいふう</rt></ruby>でこわれた、<ruby class="furigana-word">地震<rt>じしん</rt></ruby>でこわれた、つなみ<span class="note-ref">(注2)</span>で<ruby class="furigana-word">流<rt>なが</rt></ruby>されたなど、いろいろ<ruby class="furigana-word">言<rt>い</rt></ruby>われていますが、どれも<ruby class="furigana-word">本当<rt>ほんとう</rt></ruby>かどうかわからないそうです。</p>
+    </div>
+  </section>
+
+  <div class="footnotes">
+    <span>(注1) <ruby class="furigana-word">大仏<rt>だいぶつ</rt></ruby>：Great Buddha</span>
+    <span>(注2) つなみ：Tsunami</span>
+  </div>
+
+  <section class="question-section">
+    <div class="question-block" data-q="1">
+      <div class="question-title">問い　<ruby class="furigana-word">建物<rt>たてもの</rt></ruby>はどうしてありませんか。</div>
+      <ul class="options">
+        <li class="option-item" data-correct="false">1. <ruby class="furigana-word">初<rt>はじ</rt></ruby>めからありませんでした。</li>
+        <li class="option-item" data-correct="false">2. つなみで<ruby class="furigana-word">流<rt>なが</rt></ruby>されました。</li>
+        <li class="option-item" data-correct="false">3. <ruby class="furigana-word">地震<rt>じしん</rt></ruby>と<ruby class="furigana-word">台風<rt>たいふう</rt></ruby>でこわれました。</li>
+        <li class="option-item" data-correct="true">4. <ruby class="furigana-word">原因<rt>げんいん</rt></ruby>はよくわかりません。</li>
+      </ul>
+      <div class="quiz-feedback" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <aside class="kotoba-box">
+    <span class="kotoba-tag">ことば</span>
+    <div class="kotoba-list">
+      <div class="kotoba-item"><ruby class="furigana-word">建物<rt>たてもの</rt></ruby><span class="gloss">Building</span></div>
+      <div class="kotoba-item"><ruby class="furigana-word">台風<rt>たいふう</rt></ruby><span class="gloss">Typhoon</span></div>
+      <div class="kotoba-item">こわれる<span class="gloss">To be destroyed</span></div>
+      <div class="kotoba-item"><ruby class="furigana-word">地震<rt>じしん</rt></ruby><span class="gloss">Earthquake</span></div>
+    </div>
+  </aside>
+</main>
+<script>
+'use strict';
+
+const explanations = {
+  "1": "正解は4です。本文の最後（5行目）に「台風でこわれた、地震でこわれた、つなみで流されたなど、いろいろ言われていますが、どれも本当かどうかわからない」とあります。原因の候補はいくつかありますが、どれも本当だとは確認されていません。したがって、原因はよくわからない、が答えです。"
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const rubyWords = document.querySelectorAll('ruby.furigana-word');
+  rubyWords.forEach(word => {
+    word.addEventListener('dblclick', event => {
+      event.preventDefault();
+      word.classList.toggle('revealed');
+    });
+  });
+
+  document.getElementById('showAllBtn').addEventListener('click', () => {
+    rubyWords.forEach(word => word.classList.add('revealed'));
+  });
+  document.getElementById('hideAllBtn').addEventListener('click', () => {
+    rubyWords.forEach(word => word.classList.remove('revealed'));
+  });
+
+  document.querySelectorAll('.question-block').forEach(block => {
+    const options = block.querySelectorAll('.option-item');
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        if (option.classList.contains('locked')) return;
+        const isCorrect = option.dataset.correct === 'true';
+        option.classList.add(isCorrect ? 'correct' : 'wrong');
+        if (!isCorrect) {
+          const correctOption = block.querySelector('.option-item[data-correct="true"]');
+          if (correctOption) correctOption.classList.add('correct');
+        }
+        options.forEach(item => item.classList.add('locked'));
+        const feedback = block.querySelector('.quiz-feedback');
+        feedback.textContent = (isCorrect ? '正解！ ' : '不正解… ') + explanations[block.dataset.q];
+        feedback.classList.add('show');
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
