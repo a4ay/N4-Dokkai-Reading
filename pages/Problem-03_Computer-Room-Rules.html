@@ -104,22 +104,45 @@ button:hover{background:var(--hover-bg)}
 </main>
 <script>
 const explanations = {
- "1": "正解は1です。<ruby class="furigana-word">月曜日<rt>げつようび</rt></ruby>から<ruby class="furigana-word">金曜日<rt>きんようび</rt></ruby>は21時までコンピューター<ruby class="furigana-word">室<rt>しつ</rt></ruby>を使えます。1は<ruby class="furigana-word">夜<rt>よる</rt></ruby>8時までなので、<ruby class="furigana-word">利用<rt>りよう</rt></ruby><ruby class="furigana-word">時間<rt>じかん</rt></ruby>内です。また、<ruby class="furigana-word">授業<rt>じゅぎょう</rt></ruby>と<ruby class="furigana-word">関係<rt>かんけい</rt></ruby>がある<ruby class="furigana-word">日本語<rt>にほんご</rt></ruby>の<ruby class="furigana-word">作文<rt>さくぶん</rt></ruby>なら<ruby class="furigana-word">印刷<rt>いんさつ</rt></ruby>できます（<ruby class="furigana-word">利用<rt>りよう</rt></ruby><ruby class="furigana-word">時間<rt>じかん</rt></ruby>は注意<ruby class="furigana-word">書<rt>か</rt></ruby>きの最初の項目、<ruby class="furigana-word">印刷<rt>いんさつ</rt></ruby>については3つ目の項目）。2はゲームをしてはいけないと書いてあるので不可です（最後の項目）。3は、<ruby class="furigana-word">使<rt>つか</rt></ruby>う<ruby class="furigana-word">日時<rt>にちじ</rt></ruby>と<ruby class="furigana-word">時間<rt>じかん</rt></ruby>を<ruby class="furigana-word">予約<rt>よやく</rt></ruby>してから<ruby class="furigana-word">利用<rt>りよう</rt></ruby>する必要があるので不可です（2つ目の項目）。4は、<ruby class="furigana-word">飲<rt>の</rt></ruby>み<ruby class="furigana-word">物<rt>もの</rt></ruby>を飲んではいけないので不可です（4つ目の項目）。"
+  "1": '正解は1です。月曜日から金曜日は21時までコンピューター室を使えます。1は夜8時までなので、利用時間内です。また、授業と関係がある日本語の作文なら印刷できます（利用時間は注意書きの最初の項目、印刷については3つ目の項目）。2はゲームをしてはいけないと書いてあるので不可です（最後の項目）。3は、使う日時と時間を予約してから利用する必要があるので不可です（2つ目の項目）。4は、飲み物を飲んではいけないので不可です（4つ目の項目）。'
 };
-document.querySelectorAll('ruby.furigana-word').forEach(node=>node.addEventListener('dblclick',()=>node.classList.toggle('revealed')));
-document.getElementById('showAllBtn').addEventListener('click',()=>document.querySelectorAll('ruby.furigana-word').forEach(n=>n.classList.add('revealed')));
-document.getElementById('hideAllBtn').addEventListener('click',()=>document.querySelectorAll('ruby.furigana-word').forEach(n=>n.classList.remove('revealed')));
-document.querySelectorAll('.question-block').forEach(block=>{
- const q=block.dataset.q, feedback=block.querySelector('.quiz-feedback');
- block.querySelectorAll('.option-item').forEach(option=>option.addEventListener('click',()=>{
-  if(block.classList.contains('answered'))return;
-  const ok=option.dataset.correct==='true';
-  option.classList.add(ok?'correct':'wrong');
-  if(!ok)block.querySelector('[data-correct="true"]').classList.add('correct');
-  block.querySelectorAll('.option-item').forEach(item=>item.classList.add('locked'));
-  feedback.textContent=(ok?'正解です。':'残念。不正解です。')+explanations[q];
-  feedback.classList.add('show');block.classList.add('answered');
- }));
+
+function setAllFurigana(visible) {
+  document.querySelectorAll("ruby.furigana-word").forEach((ruby) => {
+    ruby.classList.toggle("revealed", visible);
+  });
+}
+
+document.querySelectorAll("ruby.furigana-word").forEach((ruby) => {
+  ruby.addEventListener("dblclick", () => {
+    ruby.classList.toggle("revealed");
+  });
+});
+
+document.getElementById("showAllBtn").addEventListener("click", () => setAllFurigana(true));
+document.getElementById("hideAllBtn").addEventListener("click", () => setAllFurigana(false));
+
+document.querySelectorAll(".question-block").forEach((block) => {
+  const questionNumber = block.dataset.q;
+  const feedback = block.querySelector(".quiz-feedback");
+
+  block.querySelectorAll(".option-item").forEach((option) => {
+    option.addEventListener("click", () => {
+      if (block.classList.contains("answered")) return;
+
+      const isCorrect = option.dataset.correct === "true";
+      option.classList.add(isCorrect ? "correct" : "wrong");
+
+      if (!isCorrect) {
+        block.querySelector('[data-correct="true"]').classList.add("correct");
+      }
+
+      block.querySelectorAll(".option-item").forEach((item) => item.classList.add("locked"));
+      feedback.textContent = (isCorrect ? "正解です。" : "残念。不正解です。") + explanations[questionNumber];
+      feedback.classList.add("show");
+      block.classList.add("answered");
+    });
+  });
 });
 </script>
 </body>
