@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problem-01_Jorge-DVD-Return</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --ruby-color: #dc2626;
+      --hover-bg: #f1f5f9;
+      --note-border: #f59e0b;
+      --note-bg: #fffdf5;
+
+      /* Quiz Feedback Colors */
+      --correct-bg: #dcfce7;
+      --correct-border: #22c55e;
+      --correct-text: #15803d;
+      --wrong-bg: #fee2e2;
+      --wrong-border: #ef4444;
+      --wrong-text: #b91c1c;
+    }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 720px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+      font-size: 1.35rem;
+      margin-top: 0;
+      color: #0f172a;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .instructions {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    button.btn-ctrl {
+      background: #e2e8f0;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    button.btn-ctrl:hover {
+      background: #cbd5e1;
+    }
+
+    /* Reading area */
+    .reading-box {
+      font-size: 1.25rem;
+      line-height: 2.8;
+    }
+
+    .note-box {
+      background: var(--note-bg);
+      border-left: 4px solid var(--note-border);
+      padding: 18px 22px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .meta-signer {
+      text-align: right;
+      margin-top: 14px;
+      font-weight: bold;
+    }
+
+    /* Ruby styling */
+    ruby.furigana-word {
+      cursor: pointer;
+      user-select: none;
+      border-radius: 4px;
+      padding: 2px 3px;
+      transition: background-color 0.15s ease;
+    }
+
+    ruby.furigana-word:hover {
+      background-color: var(--hover-bg);
+    }
+
+    ruby.furigana-word rt {
+      visibility: hidden;
+      opacity: 0;
+      color: var(--ruby-color);
+      font-size: 0.65em;
+      font-weight: bold;
+      transition: opacity 0.18s ease-in-out;
+    }
+
+    ruby.furigana-word.revealed rt {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Question & Quiz Section */
+    .question-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .question-title {
+      font-size: 1.15rem;
+      font-weight: bold;
+      margin-bottom: 16px;
+      line-height: 2.4;
+    }
+
+    .options-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-item {
+      padding: 12px 16px;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      line-height: 2.2;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option-item:hover:not(.locked) {
+      background: var(--hover-bg);
+      border-color: #cbd5e1;
+    }
+
+    .option-item.correct {
+      background-color: var(--correct-bg) !important;
+      border-color: var(--correct-border) !important;
+      color: var(--correct-text) !important;
+      font-weight: bold;
+    }
+
+    .option-item.wrong {
+      background-color: var(--wrong-bg) !important;
+      border-color: var(--wrong-border) !important;
+      color: var(--wrong-text) !important;
+    }
+
+    .option-item.locked {
+      cursor: default;
+    }
+
+    .quiz-feedback {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .quiz-feedback.show {
+      display: block;
+    }
+
+    .quiz-feedback.correct {
+      background: var(--correct-bg);
+      border: 1px solid var(--correct-border);
+      color: var(--correct-text);
+    }
+
+    .quiz-feedback.wrong {
+      background: var(--wrong-bg);
+      border: 1px solid var(--wrong-border);
+      color: var(--wrong-text);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>もんだい 1 (p. 16)</h1>
+    <div class="instructions">
+      💡 <strong>Tip:</strong> 漢字をダブルクリックするとふりがなが表示されます。<br>
+      選択肢をクリックして答えを確認できます。(Click an option to check your answer).
+    </div>
+
+    <div class="controls">
+      <button class="btn-ctrl" id="showAllBtn">すべてのふりがなを表示 (Show All)</button>
+      <button class="btn-ctrl" id="hideAllBtn">すべてのふりがなを隠す (Hide All)</button>
+    </div>
+
+    <div class="reading-box">
+      <p>
+        ホルヘさんが<ruby class="furigana-word">部屋<rt>へや</rt></ruby>に<ruby class="furigana-word">帰<rt>かえ</rt></ruby>ると、ドアの<ruby class="furigana-word">前<rt>まえ</rt></ruby>に<ruby class="furigana-word">袋<rt>ふくろ</rt></ruby>がかけてありました。<ruby class="furigana-word">袋<rt>ふくろ</rt></ruby>の<ruby class="furigana-word">中<rt>なか</rt></ruby>に<ruby class="furigana-word">手紙<rt>てがみ</rt></ruby>が<ruby class="furigana-word">入<rt>はい</rt></ruby>っていました。
+      </p>
+
+      <div class="note-box">
+        <strong>ホルヘさんへ</strong><br>
+        <ruby class="furigana-word">先週<rt>せんしゅう</rt></ruby><ruby class="furigana-word">借<rt>か</rt></ruby>りたDVDを<ruby class="furigana-word">返<rt>かえ</rt></ruby>しに<ruby class="furigana-word">来<rt>き</rt></ruby>ましたが、ホルヘさんがいなかったので、<ruby class="furigana-word">袋<rt>ふくろ</rt></ruby>に<ruby class="furigana-word">入<rt>い</rt></ruby>れておきます。もう1<ruby class="furigana-word">枚<rt>まい</rt></ruby>はまだ<ruby class="furigana-word">見終<rt>みお</rt></ruby>わっていないので、もう<ruby class="furigana-word">少<rt>すこ</rt></ruby>し<ruby class="furigana-word">貸<rt>か</rt></ruby>してください。1<ruby class="furigana-word">枚<rt>まい</rt></ruby>だけしか<ruby class="furigana-word">返<rt>かえ</rt></ruby>さなくて、ごめんなさい。<br>
+        お<ruby class="furigana-word">菓子<rt>かし</rt></ruby>はお<ruby class="furigana-word">礼<rt>れい</rt></ruby>です。<ruby class="furigana-word">食<rt>た</rt></ruby>べてください。どうもありがとう。
+        <div class="meta-signer">リー</div>
+      </div>
+    </div>
+
+    <!-- Question Section -->
+    <div class="question-section">
+      <div class="question-title">
+        <strong>【<ruby class="furigana-word">問<rt>と</rt></ruby>い】</strong> <ruby class="furigana-word">袋<rt>ふくろ</rt></ruby>の<ruby class="furigana-word">中<rt>なか</rt></ruby>には<ruby class="furigana-word">何<rt>なに</rt></ruby>が<ruby class="furigana-word">入<rt>はい</rt></ruby>っていましたか。
+      </div>
+
+      <ul class="options-list">
+        <li class="option-item" data-correct="false">1. <ruby class="furigana-word">手紙<rt>てがみ</rt></ruby>とDVDが1<ruby class="furigana-word">枚<rt>まい</rt></ruby></li>
+        <li class="option-item" data-correct="false">2. <ruby class="furigana-word">手紙<rt>てがみ</rt></ruby>とDVDが2<ruby class="furigana-word">枚<rt>まい</rt></ruby></li>
+        <li class="option-item" data-correct="true">3. <ruby class="furigana-word">手紙<rt>てがみ</rt></ruby>とDVDが1<ruby class="furigana-word">枚<rt>まい</rt></ruby>とお<ruby class="furigana-word">菓子<rt>かし</rt></ruby></li>
+        <li class="option-item" data-correct="false">4. <ruby class="furigana-word">手紙<rt>てがみ</rt></ruby>とDVDが2<ruby class="furigana-word">枚<rt>まい</rt></ruby>とお<ruby class="furigana-word">菓子<rt>かし</rt></ruby></li>
+      </ul>
+
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>
+  </div>
+
+  <script>
+    // Double-click furigana reveal toggle
+    const rubyElements = document.querySelectorAll('ruby.furigana-word');
+    rubyElements.forEach(ruby => {
+      ruby.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        ruby.classList.toggle('revealed');
+      });
+    });
+
+    // Bulk toggle controls
+    document.getElementById('showAllBtn').addEventListener('click', () => {
+      rubyElements.forEach(r => r.classList.add('revealed'));
+    });
+    document.getElementById('hideAllBtn').addEventListener('click', () => {
+      rubyElements.forEach(r => r.classList.remove('revealed'));
+    });
+
+    // Interactive Quiz Logic
+    const explanationText = "「先週借りたDVDを返しに来ましたが、…袋に入れておきます。もう1枚はまだ見終わっていないので…1枚だけしか返さなくて、ごめんなさい」とあるため、袋に入れたDVDは1枚です。さらに「手紙が入っていました」「お菓子はお礼です」と書かれているため、袋の中身は「手紙」と「DVDが1枚」と「お菓子」の3点です。したがって、正解は3番です。";
+    const optionItems = document.querySelectorAll('.option-item');
+    const feedbackBox = document.getElementById('quizFeedback');
+
+    optionItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const isCorrect = item.getAttribute('data-correct') === 'true';
+
+        if (isCorrect) {
+          item.classList.add('correct');
+          feedbackBox.className = 'quiz-feedback show correct';
+          feedbackBox.innerHTML = `<strong>正解！ (Correct!)</strong><br>${explanationText}`;
+        } else {
+          item.classList.add('wrong');
+          optionItems.forEach(opt => {
+            if (opt.getAttribute('data-correct') === 'true') {
+              opt.classList.add('correct');
+            }
+          });
+          feedbackBox.className = 'quiz-feedback show wrong';
+          feedbackBox.innerHTML = `<strong>残念！ (Incorrect)</strong><br>${explanationText}`;
+        }
+
+        optionItems.forEach(opt => opt.classList.add('locked'));
+      });
+    });
+  </script>
+</body>
+</html>
