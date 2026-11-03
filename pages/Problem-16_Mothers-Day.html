@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Problem 16 — 母の日</title>
+<style>
+:root{--bg:#f8fafc;--card-bg:#fff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--ruby-color:#dc2626;--hover-bg:#f1f5f9;--frame-border:#94a3b8;--gutter-text:#94a3b8;--correct-bg:#dcfce7;--correct-border:#22c55e;--correct-text:#15803d;--wrong-bg:#fee2e2;--wrong-border:#ef4444;--wrong-text:#b91c1c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}.container{max-width:720px;margin:28px auto;padding:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;box-shadow:0 4px 18px #0f172a0a}.problem-header{margin-bottom:24px}.type-tag{display:inline-block;font-size:.8rem;color:var(--text-muted);border-bottom:2px solid var(--border);margin-bottom:8px}.problem-title{font-weight:bold;font-size:1.15rem}.instruction{font-size:1rem;line-height:1.9;margin:4px 0 0}.controls{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 22px}.controls button{border:1px solid #cbd5e1;border-radius:7px;background:#fff;color:var(--text);padding:9px 14px;font-size:.92rem;cursor:pointer}.controls button:hover{background:var(--hover-bg)}.passage{position:relative;padding-right:2.75rem;font-size:1.25rem;line-height:2.8}.reading-box p{text-indent:1em;margin:0}.ln{display:inline}.ln::after{content:attr(data-ln);position:absolute;right:.25rem;font-size:.75rem;line-height:3.5rem;color:var(--gutter-text);user-select:none;pointer-events:none}.question-section{border-top:1px dashed var(--border);margin-top:32px;padding-top:24px}.question-title{font-size:1.15rem;font-weight:bold;line-height:1.9;margin-bottom:12px}.options{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}.option-item{border:2px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;line-height:1.8;transition:background .15s,border-color .15s}.option-item:hover:not(.locked){background:var(--hover-bg)}.option-item.correct{background:var(--correct-bg);border-color:var(--correct-border);color:var(--correct-text)}.option-item.wrong{background:var(--wrong-bg);border-color:var(--wrong-border);color:var(--wrong-text)}.option-item.locked{cursor:default;pointer-events:none}.quiz-feedback{display:none;margin-top:14px;padding:12px 14px;border-radius:8px;background:#f1f5f9;line-height:1.9}.quiz-feedback.show{display:block}.kotoba-box{margin-top:28px}.kotoba-tag{display:inline-block;border:1.5px solid var(--text);border-radius:6px;padding:0 10px;font-weight:bold}.kotoba-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0 24px;line-height:2.4;margin-top:8px}.kotoba-item .gloss{color:var(--text-muted);font-size:.9rem;margin-left:.75em}ruby.furigana-word{user-select:none;cursor:pointer;ruby-position:over}ruby.furigana-word rt{visibility:hidden;opacity:0;color:var(--ruby-color);font-size:.65em;font-weight:bold;transition:opacity .18s ease-in-out}ruby.furigana-word.revealed rt{visibility:visible;opacity:1}.footer-note{font-size:.82rem;color:var(--text-muted);margin-top:24px}@media(max-width:600px){.container{margin:0;padding:22px 18px;border-radius:0}.passage{font-size:1.12rem;padding-right:2rem}}
+</style>
+</head>
+<body>
+<main class="container">
+<header class="problem-header">
+  <div class="type-tag">エッセイ　Short essays</div>
+  <div class="problem-title">☆ もんだい 16</div>
+  <p class="instruction"><ruby class="furigana-word">次<rt>つぎ</rt></ruby>の<ruby class="furigana-word">文章<rt>ぶんしょう</rt></ruby>を<ruby class="furigana-word">読<rt>よ</rt></ruby>んで、<ruby class="furigana-word">質問<rt>しつもん</rt></ruby>に<ruby class="furigana-word">答<rt>こた</rt></ruby>えてください。<ruby class="furigana-word">答<rt>こた</rt></ruby>えは、1・2・3・4から、いちばんいいものを1つ<ruby class="furigana-word">選<rt>えら</rt></ruby>んでください。</p>
+</header>
+<div class="controls" aria-label="Furigana controls">
+  <button id="showAllBtn" type="button">Show All Furigana</button>
+  <button id="hideAllBtn" type="button">Hide All Furigana</button>
+</div>
+<section class="passage" aria-label="Reading passage">
+  <div class="reading-box">
+    <p><span class="ln" data-ln="1"></span><ruby class="furigana-word">先週<rt>せんしゅう</rt></ruby>の<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>は<ruby class="furigana-word">母<rt>はは</rt></ruby>の<ruby class="furigana-word">日<rt>ひ</rt></ruby>でした。</p>
+    <p><ruby class="furigana-word">私<rt>わたし</rt></ruby>は、<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>は<ruby class="furigana-word">用事<rt>ようじ</rt></ruby>があったので、<ruby class="furigana-word">土曜日<rt>どようび</rt></ruby>に<ruby class="furigana-word">母<rt>はは</rt></ruby>が<ruby class="furigana-word">好<rt>す</rt></ruby>きな<ruby class="furigana-word">料理<rt>りょうり</rt></ruby>を<ruby class="furigana-word">作<rt>つく</rt></ruby>ってあげました。</p>
+    <p><ruby class="furigana-word">姉<rt>あね</rt></ruby>は<ruby class="furigana-word">仕事<rt>しごと</rt></ruby>でパリに<ruby class="furigana-word">行<rt>い</rt></ruby>っていたので、<ruby class="furigana-word">母<rt>はは</rt></ruby>にメールだけ<ruby class="furigana-word">送<rt>おく</rt></ruby>り、<ruby class="furigana-word">帰国<rt>きこく</rt></ruby>したあと、パリで<ruby class="furigana-word">買<rt>か</rt></ruby>ったバッグをあげました。</p>
+    <p><span class="ln" data-ln="5"></span><ruby class="furigana-word">弟<rt>おとうと</rt></ruby>は「<ruby class="furigana-word">何<rt>なん</rt></ruby>でもしてあげます」と<ruby class="furigana-word">書<rt>か</rt></ruby>いた<ruby class="furigana-word">紙<rt>かみ</rt></ruby>を5<ruby class="furigana-word">枚<rt>まい</rt></ruby>あげました。<ruby class="furigana-word">母<rt>はは</rt></ruby>が<ruby class="furigana-word">弟<rt>おとうと</rt></ruby>に「じゃ、<ruby class="furigana-word">今度<rt>こんど</rt></ruby>のテストで100<ruby class="furigana-word">点<rt>てん</rt></ruby><ruby class="furigana-word">取<rt>と</rt></ruby>ってくれる？」というと、<ruby class="furigana-word">弟<rt>おとうと</rt></ruby>は「あ、それは<ruby class="furigana-word">無理<rt>むり</rt></ruby>！」と<ruby class="furigana-word">答<rt>こた</rt></ruby>えました。</p>
+  </div>
+</section>
+<section class="question-section">
+  <div class="question-block" data-q="1">
+    <div class="question-title"><ruby class="furigana-word">問<rt>と</rt></ruby>い　<ruby class="furigana-word">先週<rt>せんしゅう</rt></ruby>の<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>について<ruby class="furigana-word">書<rt>か</rt></ruby>かれていることはどれですか。</div>
+    <ul class="options">
+      <li class="option-item" data-correct="false">1. <ruby class="furigana-word">母<rt>はは</rt></ruby>は<ruby class="furigana-word">姉<rt>あね</rt></ruby>にバッグをもらいました。</li>
+      <li class="option-item" data-correct="false">2. <ruby class="furigana-word">弟<rt>おとうと</rt></ruby>は<ruby class="furigana-word">母<rt>はは</rt></ruby>のために100<ruby class="furigana-word">点<rt>てん</rt></ruby>を<ruby class="furigana-word">取<rt>と</rt></ruby>ってあげました。</li>
+      <li class="option-item" data-correct="true">3. <ruby class="furigana-word">母<rt>はは</rt></ruby>は<ruby class="furigana-word">姉<rt>あね</rt></ruby>にメールをもらいました。</li>
+      <li class="option-item" data-correct="false">4. <ruby class="furigana-word">私<rt>わたし</rt></ruby>は<ruby class="furigana-word">母<rt>はは</rt></ruby>に<ruby class="furigana-word">料理<rt>りょうり</rt></ruby>を<ruby class="furigana-word">作<rt>つく</rt></ruby>ってあげました。</li>
+    </ul>
+    <div class="quiz-feedback" aria-live="polite"></div>
+  </div>
+</section>
+<aside class="kotoba-box">
+  <span class="kotoba-tag">ことば</span>
+  <div class="kotoba-list">
+    <div class="kotoba-item"><ruby class="furigana-word">帰国<rt>きこく</rt></ruby>する <span class="gloss">To return to your home country</span></div>
+    <div class="kotoba-item"><ruby class="furigana-word">無理<rt>むり</rt></ruby>（な） <span class="gloss">Impossible, unreasonable</span></div>
+  </div>
+</aside>
+<p class="footer-note">Tip: Double-click an individual kanji word to reveal its reading. Use the buttons to show or hide all readings.</p>
+</main>
+<script>
+'use strict';
+const explanations = {
+  "1": "<ruby class=\"furigana-word\">正解<rt>せいかい</rt></ruby>は3です。<ruby class=\"furigana-word\">本文<rt>ほんぶん</rt></ruby>3<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>に「<ruby class=\"furigana-word\">姉<rt>あね</rt></ruby>は…<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>にメールだけ<ruby class=\"furigana-word\">送<rt>おく</rt></ruby>り」とあります。<ruby class=\"furigana-word\">姉<rt>あね</rt></ruby>は<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>にメールを<ruby class=\"furigana-word\">送<rt>おく</rt></ruby>りました。<ruby class=\"furigana-word\">選択肢<rt>せんたくし</rt></ruby>1のバッグは、<ruby class=\"furigana-word\">姉<rt>あね</rt></ruby>が<ruby class=\"furigana-word\">帰国<rt>きこく</rt></ruby>したあとに<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>へあげたものです。<ruby class=\"furigana-word\">選択肢<rt>せんたくし</rt></ruby>2では、<ruby class=\"furigana-word\">弟<rt>おとうと</rt></ruby>は100<ruby class=\"furigana-word\">点<rt>てん</rt></ruby>を<ruby class=\"furigana-word\">取<rt>と</rt></ruby>ったのではなく、<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>に<ruby class=\"furigana-word\">頼<rt>たの</rt></ruby>まれて「あ、それは<ruby class=\"furigana-word\">無理<rt>むり</rt></ruby>！」と<ruby class=\"furigana-word\">答<rt>こた</rt></ruby>えています。<ruby class=\"furigana-word\">選択肢<rt>せんたくし</rt></ruby>4の<ruby class=\"furigana-word\">料理<rt>りょうり</rt></ruby>を<ruby class=\"furigana-word\">作<rt>つく</rt></ruby>ったのは<ruby class=\"furigana-word\">日曜日<rt>にちようび</rt></ruby>ではなく、<ruby class=\"furigana-word\">本文<rt>ほんぶん</rt></ruby>2<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>にある<ruby class=\"furigana-word\">土曜日<rt>どようび</rt></ruby>です。"
+};
+const furiganaWords = document.querySelectorAll('ruby.furigana-word');
+const showAllBtn = document.getElementById('showAllBtn');
+const hideAllBtn = document.getElementById('hideAllBtn');
+showAllBtn.addEventListener('click', () => furiganaWords.forEach(word => word.classList.add('revealed')));
+hideAllBtn.addEventListener('click', () => furiganaWords.forEach(word => word.classList.remove('revealed')));
+furiganaWords.forEach(word => word.addEventListener('dblclick', event => {
+  event.preventDefault();
+  word.classList.toggle('revealed');
+}));
+document.querySelectorAll('.question-block').forEach(block => {
+  const options = block.querySelectorAll('.option-item');
+  options.forEach(option => option.addEventListener('click', () => {
+    if (option.classList.contains('locked')) return;
+    const correct = option.dataset.correct === 'true';
+    option.classList.add(correct ? 'correct' : 'wrong');
+    if (!correct) block.querySelector('.option-item[data-correct="true"]').classList.add('correct');
+    options.forEach(item => item.classList.add('locked'));
+    const feedback = block.querySelector('.quiz-feedback');
+    feedback.innerHTML = (correct ? '正解！ ' : '不正解… ') + explanations[block.dataset.q];
+    feedback.classList.add('show');
+  }));
+});
+</script>
+</body>
+</html>
