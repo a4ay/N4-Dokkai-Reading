@@ -3,10 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Problem 16 — 母の日</title>
+<title>もんだい16 — Mothers Day</title>
 <style>
-:root{--bg:#f8fafc;--card-bg:#fff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--ruby-color:#dc2626;--hover-bg:#f1f5f9;--frame-border:#94a3b8;--gutter-text:#94a3b8;--correct-bg:#dcfce7;--correct-border:#22c55e;--correct-text:#15803d;--wrong-bg:#fee2e2;--wrong-border:#ef4444;--wrong-text:#b91c1c}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}.container{max-width:720px;margin:28px auto;padding:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;box-shadow:0 4px 18px #0f172a0a}.problem-header{margin-bottom:24px}.type-tag{display:inline-block;font-size:.8rem;color:var(--text-muted);border-bottom:2px solid var(--border);margin-bottom:8px}.problem-title{font-weight:bold;font-size:1.15rem}.instruction{font-size:1rem;line-height:1.9;margin:4px 0 0}.controls{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 22px}.controls button{border:1px solid #cbd5e1;border-radius:7px;background:#fff;color:var(--text);padding:9px 14px;font-size:.92rem;cursor:pointer}.controls button:hover{background:var(--hover-bg)}.passage{position:relative;padding-right:2.75rem;font-size:1.25rem;line-height:2.8}.reading-box p{text-indent:1em;margin:0}.ln{display:inline}.ln::after{content:attr(data-ln);position:absolute;right:.25rem;font-size:.75rem;line-height:3.5rem;color:var(--gutter-text);user-select:none;pointer-events:none}.question-section{border-top:1px dashed var(--border);margin-top:32px;padding-top:24px}.question-title{font-size:1.15rem;font-weight:bold;line-height:1.9;margin-bottom:12px}.options{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}.option-item{border:2px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;line-height:1.8;transition:background .15s,border-color .15s}.option-item:hover:not(.locked){background:var(--hover-bg)}.option-item.correct{background:var(--correct-bg);border-color:var(--correct-border);color:var(--correct-text)}.option-item.wrong{background:var(--wrong-bg);border-color:var(--wrong-border);color:var(--wrong-text)}.option-item.locked{cursor:default;pointer-events:none}.quiz-feedback{display:none;margin-top:14px;padding:12px 14px;border-radius:8px;background:#f1f5f9;line-height:1.9}.quiz-feedback.show{display:block}.kotoba-box{margin-top:28px}.kotoba-tag{display:inline-block;border:1.5px solid var(--text);border-radius:6px;padding:0 10px;font-weight:bold}.kotoba-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0 24px;line-height:2.4;margin-top:8px}.kotoba-item .gloss{color:var(--text-muted);font-size:.9rem;margin-left:.75em}.footer-note{font-size:.82rem;color:var(--text-muted);margin-top:24px}@media(max-width:600px){.container{margin:0;padding:22px 18px;border-radius:0}.passage{font-size:1.12rem;padding-right:2rem}}
+/* Base stylesheet (UI Design Guide 6H). Paste unchanged into every page. */
+:root {
+  --bg: #f8fafc; --card-bg: #ffffff; --text: #1e293b; --text-muted: #64748b; --border: #e2e8f0;
+  --ruby-color: #dc2626; --hover-bg: #f1f5f9;
+  --note-border: #f59e0b; --note-bg: #fffdf5;
+  --frame-border: #94a3b8; --frame-bg: #ffffff; --arrow: #475569; --gutter-text: #94a3b8;
+  --correct-bg: #dcfce7; --correct-border: #22c55e; --correct-text: #15803d;
+  --wrong-bg: #fee2e2; --wrong-border: #ef4444; --wrong-text: #b91c1c;
+}
+
+/* Page */
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif; }
+.container { max-width: 720px; margin: 28px auto; padding: 32px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 4px 18px #0f172a0a; }
+
+/* Header and furigana controls */
+.problem-header { margin-bottom: 24px; }
+.type-tag { display: inline-block; font-size: 0.8rem; color: var(--text-muted); border-bottom: 2px solid var(--border); margin-bottom: 8px; }
+.problem-title { font-weight: bold; font-size: 1.15rem; }
+.instruction { font-size: 1rem; line-height: 2.2; margin: 4px 0 0; }
+.controls { display: flex; gap: 10px; flex-wrap: wrap; margin: 16px 0 22px; }
+.controls button { border: 1px solid #cbd5e1; border-radius: 7px; background: #fff; color: var(--text); padding: 9px 14px; font-size: 0.92rem; cursor: pointer; }
+.controls button:hover { background: var(--hover-bg); }
+
+/* Passage area: holds lead-in, document and the line-number gutter */
+.passage { position: relative; padding-right: 2.75rem; font-size: 1.25rem; line-height: 2.8; overflow-wrap: anywhere; }
+.lead-in { margin: 0 0 4px; }
+.ln::after {
+  content: attr(data-ln);
+  position: absolute; right: 0.25rem;      /* top stays auto, so it sits on the marker's line */
+  font-size: 0.75rem; line-height: 3.5rem; /* 1.25rem x 2.8 = one passage line */
+  color: var(--gutter-text); user-select: none; pointer-events: none;
+}
+
+/* Lines and alignment */
+.gap { height: 0.75rem; }
+.indent-1 { padding-left: 1em; }
+.indent-2 { padding-left: 2em; }
+.align-right { text-align: right; }
+.align-center { text-align: center; }
+.addressee { font-weight: normal; }
+
+/* Prose */
+.reading-box p { text-indent: 1em; margin: 0; }
+.source-line { text-align: right; font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; }
+
+/* Memos and emails */
+.note-box { border-left: 4px solid var(--note-border); background: var(--note-bg); padding: 16px 20px; margin: 8px 0; }
+.meta-signer { text-align: right; margin-top: 14px; font-weight: bold; }
+.meta-signer.left { text-align: left; }
+.gap + .meta-signer { margin-top: 0; }
+.meta-signer + .meta-signer { margin-top: 0; font-weight: normal; }
+
+/* Frames, titles, sections */
+.doc-frame { border: 1.5px solid var(--frame-border); border-radius: 4px; background: var(--frame-bg); padding: 16px 24px; margin: 8px 0; }
+.doc-frame.rounded { border-radius: 18px; }
+.doc-title { text-align: center; font-weight: bold; font-size: 1.4rem; margin: 4px 0 12px; }
+.doc-title.boxed { display: table; margin: 4px auto 12px; border: 1.5px solid var(--frame-border); padding: 0 16px; }
+.doc-title.underline { text-decoration: underline; text-underline-offset: 8px; }
+.doc-section { margin-top: 12px; }
+.doc-section.boxed { border: 1px solid var(--frame-border); padding: 8px 16px; }
+.doc-section-title { font-weight: bold; }
+
+/* Label : value rows with hanging indent (日時：, 場所：...) */
+.field-list { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 0.25em; margin: 4px 0; }
+.field-list dt { font-weight: normal; }
+.field-list dd { margin: 0; }
+.field-list.indented { margin-left: 2em; }
+
+/* Printed-glyph lists (・ ● ＊ ※): glyph hangs, wrapped lines align */
+.glyph-list { list-style: none; margin: 4px 0; padding-left: 1em; }
+.glyph-list li { text-indent: -1em; }
+.glyph-list .glyph-list { padding-left: 2em; }
+
+/* Contact / organizer block */
+.contact-block { width: fit-content; margin: 16px 0 0 auto; }
+.contact-block.center { margin: 16px auto 0; text-align: center; }
+
+/* Flow chart */
+.flow-header { margin-bottom: 8px; }
+.flow-steps { list-style: none; margin: 0; padding: 0; }
+.flow-step { display: flex; border: 1.5px solid var(--frame-border); }
+.step-label { display: flex; align-items: center; padding: 0 12px; border-right: 1.5px solid var(--frame-border); background: var(--hover-bg); font-weight: bold; white-space: nowrap; }
+.step-text { padding: 0 12px; }
+.flow-arrow { text-align: center; color: var(--arrow); line-height: 1.8; }
+
+/* Tables and calendar: cells don't wrap; a wide table scrolls inside .table-scroll */
+.table-scroll { overflow-x: auto; }
+.data-table, .calendar-table { border-collapse: collapse; font-size: 1.1rem; line-height: 2.4; margin: 12px 0; }
+.data-table th, .data-table td, .calendar-table th, .calendar-table td { border: 1px solid var(--border); padding: 8px 10px; white-space: nowrap; }
+.data-table th, .calendar-table th { background: var(--hover-bg); text-align: center; font-weight: bold; }
+.table-caption { margin: 8px 0 4px; }
+.calendar-table th, .calendar-table td { text-align: center; width: 14.28%; padding: 4px 6px; }
+
+/* Multi-document sets & articles */
+.doc-set > .doc + .doc { margin-top: 24px; }
+.doc-label { font-weight: bold; }
+.news-article p { text-indent: 1em; margin: 0; }
+
+/* Underlined parts that questions refer to: ①お金を返しました */
+.uline-num { font-size: 0.8em; }
+.uline { text-decoration: underline; text-underline-offset: 0.35em; }
+
+/* Footnotes, figures, ことば */
+.note-ref { font-size: 0.55em; color: var(--text-muted); }
+.footnotes { display: flex; flex-wrap: wrap; gap: 0 24px; font-size: 0.95rem; line-height: 2.4; color: var(--text-muted); margin-top: 8px; }
+.figure-note { text-align: center; font-size: 0.9rem; color: var(--text-muted); border: 1px dashed var(--border); padding: 8px; margin: 12px 0; }
+.kotoba-box { margin-top: 28px; }
+.kotoba-tag { display: inline-block; border: 1.5px solid var(--text); border-radius: 6px; padding: 0 10px; font-weight: bold; }
+.kotoba-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 0 24px; line-height: 2.4; margin-top: 8px; }
+.kotoba-item .gloss { color: var(--text-muted); font-size: 0.9rem; margin-left: 0.75em; }
+
+/* Questions */
+.question-section { border-top: 1px dashed var(--border); margin-top: 32px; padding-top: 24px; }
+.question-block + .question-block { margin-top: 28px; }
+.question-title { font-size: 1.15rem; font-weight: bold; line-height: 2.4; margin-bottom: 12px; }
+.options { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.option-item { border: 2px solid var(--border); border-radius: 8px; padding: 6px 14px; cursor: pointer; line-height: 2.4; transition: background 0.15s, border-color 0.15s; }
+.option-item:not(.locked):hover { background: var(--hover-bg); }
+.option-item.correct { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-text); }
+.option-item.wrong { background: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-text); }
+.option-item.locked { cursor: default; pointer-events: none; }
+.quiz-feedback { display: none; margin-top: 14px; padding: 12px 14px; border-radius: 8px; background: var(--hover-bg); line-height: 2.4; }
+.quiz-feedback.show { display: block; }
+.footer-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 24px; }
+
+/* 情報検索 spread: questions left (2/5), document right (3/5) */
+.container.spread { max-width: 1200px; }
+@media (min-width: 1100px) {
+  .spread-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 32px; align-items: start; }
+  .spread-document { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .container { margin: 0; padding: 22px 16px; border: 0; border-radius: 0; }
+  .passage { font-size: 1.12rem; padding-right: 2rem; }
+  .ln::after { line-height: 3.136rem; } /* 1.12rem x 2.8 */
+  .note-box, .doc-frame { padding: 12px 14px; }
+  .field-list.indented { margin-left: 1em; }
+}
 </style>
 <style>
 /* Furigana. Each kanji word is a ruby.furigana-word element; its reading stays hidden
@@ -93,49 +232,55 @@ ruby.furigana-word.revealed rt {
 </head>
 <body>
 <main class="container">
-<header class="problem-header">
-  <div class="type-tag">エッセイ　Short essays</div>
-  <div class="problem-title">☆ もんだい 16</div>
-  <p class="instruction"><ruby class="furigana-word">次<rt>つぎ</rt></ruby>の<ruby class="furigana-word">文章<rt>ぶんしょう</rt></ruby>を<ruby class="furigana-word">読<rt>よ</rt></ruby>んで、<ruby class="furigana-word">質問<rt>しつもん</rt></ruby>に<ruby class="furigana-word">答<rt>こた</rt></ruby>えてください。<ruby class="furigana-word">答<rt>こた</rt></ruby>えは、1・2・3・4から、いちばんいいものを1つ<ruby class="furigana-word">選<rt>えら</rt></ruby>んでください。</p>
-</header>
-<div class="controls" aria-label="Furigana controls">
-  <button id="showAllBtn" type="button">Show All Furigana</button>
-  <button id="hideAllBtn" type="button">Hide All Furigana</button>
-</div>
-<section class="passage" aria-label="Reading passage">
-  <div class="reading-box">
-    <p><span class="ln" data-ln="1"></span><ruby class="furigana-word">先週<rt>せんしゅう</rt></ruby>の<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>は<ruby class="furigana-word">母<rt>はは</rt></ruby>の<ruby class="furigana-word">日<rt>ひ</rt></ruby>でした。</p>
-    <p><ruby class="furigana-word">私<rt>わたし</rt></ruby>は、<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>は<ruby class="furigana-word">用事<rt>ようじ</rt></ruby>があったので、<ruby class="furigana-word">土曜日<rt>どようび</rt></ruby>に<ruby class="furigana-word">母<rt>はは</rt></ruby>が<ruby class="furigana-word">好<rt>す</rt></ruby>きな<ruby class="furigana-word">料理<rt>りょうり</rt></ruby>を<ruby class="furigana-word">作<rt>つく</rt></ruby>ってあげました。</p>
-    <p><ruby class="furigana-word">姉<rt>あね</rt></ruby>は<ruby class="furigana-word">仕事<rt>しごと</rt></ruby>でパリに<ruby class="furigana-word">行<rt>い</rt></ruby>っていたので、<ruby class="furigana-word">母<rt>はは</rt></ruby>にメールだけ<ruby class="furigana-word">送<rt>おく</rt></ruby>り、<ruby class="furigana-word">帰国<rt>きこく</rt></ruby>したあと、パリで<ruby class="furigana-word">買<rt>か</rt></ruby>ったバッグをあげました。</p>
-    <p><span class="ln" data-ln="5"></span><ruby class="furigana-word">弟<rt>おとうと</rt></ruby>は「<ruby class="furigana-word">何<rt>なん</rt></ruby>でもしてあげます」と<ruby class="furigana-word">書<rt>か</rt></ruby>いた<ruby class="furigana-word">紙<rt>かみ</rt></ruby>を5<ruby class="furigana-word">枚<rt>まい</rt></ruby>あげました。<ruby class="furigana-word">母<rt>はは</rt></ruby>が<ruby class="furigana-word">弟<rt>おとうと</rt></ruby>に「じゃ、<ruby class="furigana-word">今度<rt>こんど</rt></ruby>のテストで100<ruby class="furigana-word">点<rt>てん</rt></ruby><ruby class="furigana-word">取<rt>と</rt></ruby>ってくれる？」というと、<ruby class="furigana-word">弟<rt>おとうと</rt></ruby>は「あ、それは<ruby class="furigana-word">無理<rt>むり</rt></ruby>！」と<ruby class="furigana-word">答<rt>こた</rt></ruby>えました。</p>
+  <header class="problem-header">
+    <div class="type-tag">エッセイ</div>
+    <div class="problem-title">もんだい16</div>
+    <p class="instruction"><ruby class="furigana-word">次<rt>つぎ</rt></ruby>の<ruby class="furigana-word">文章<rt>ぶんしょう</rt></ruby>を<ruby class="furigana-word">読<rt>よ</rt></ruby>んで、<ruby class="furigana-word">質問<rt>しつもん</rt></ruby>に<ruby class="furigana-word">答<rt>こた</rt></ruby>えてください。<ruby class="furigana-word">答<rt>こた</rt></ruby>えは、1・2・3・4から、いちばんいいものを1つ<ruby class="furigana-word">選<rt>えら</rt></ruby>んでください。</p>
+  </header>
+
+  <div class="controls" aria-label="Furigana controls">
+    <button id="showAllBtn" type="button">Show All Furigana</button>
+    <button id="hideAllBtn" type="button">Hide All Furigana</button>
   </div>
-</section>
-<section class="question-section">
-  <div class="question-block" data-q="1">
-    <div class="question-title"><ruby class="furigana-word">問<rt>と</rt></ruby>い　<ruby class="furigana-word">先週<rt>せんしゅう</rt></ruby>の<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>について<ruby class="furigana-word">書<rt>か</rt></ruby>かれていることはどれですか。</div>
-    <ul class="options">
-      <li class="option-item" data-correct="false">1. <ruby class="furigana-word">母<rt>はは</rt></ruby>は<ruby class="furigana-word">姉<rt>あね</rt></ruby>にバッグをもらいました。</li>
-      <li class="option-item" data-correct="false">2. <ruby class="furigana-word">弟<rt>おとうと</rt></ruby>は<ruby class="furigana-word">母<rt>はは</rt></ruby>のために100<ruby class="furigana-word">点<rt>てん</rt></ruby>を<ruby class="furigana-word">取<rt>と</rt></ruby>ってあげました。</li>
-      <li class="option-item" data-correct="true">3. <ruby class="furigana-word">母<rt>はは</rt></ruby>は<ruby class="furigana-word">姉<rt>あね</rt></ruby>にメールをもらいました。</li>
-      <li class="option-item" data-correct="false">4. <ruby class="furigana-word">私<rt>わたし</rt></ruby>は<ruby class="furigana-word">母<rt>はは</rt></ruby>に<ruby class="furigana-word">料理<rt>りょうり</rt></ruby>を<ruby class="furigana-word">作<rt>つく</rt></ruby>ってあげました。</li>
-    </ul>
-    <div class="quiz-feedback" aria-live="polite"></div>
-  </div>
-</section>
-<aside class="kotoba-box">
-  <span class="kotoba-tag">ことば</span>
-  <div class="kotoba-list">
-    <div class="kotoba-item"><ruby class="furigana-word">帰国<rt>きこく</rt></ruby>する <span class="gloss">To return to your home country</span></div>
-    <div class="kotoba-item"><ruby class="furigana-word">無理<rt>むり</rt></ruby>（な） <span class="gloss">Impossible, unreasonable</span></div>
-  </div>
-</aside>
-<p class="footer-note">Tip: Tap or click a kanji word to show or hide its reading. Use the buttons to show or hide all readings.</p>
+
+  <section class="passage">
+    <div class="reading-box">
+      <p><span class="ln" data-ln="1"></span><ruby class="furigana-word">先週<rt>せんしゅう</rt></ruby>の<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>は<ruby class="furigana-word">母<rt>はは</rt></ruby>の<ruby class="furigana-word">日<rt>ひ</rt></ruby>でした。</p>
+      <p><ruby class="furigana-word">私<rt>わたし</rt></ruby>は、<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>は<ruby class="furigana-word">用事<rt>ようじ</rt></ruby>があったので、<ruby class="furigana-word">土曜日<rt>どようび</rt></ruby>に<ruby class="furigana-word">母<rt>はは</rt></ruby>が<ruby class="furigana-word">好<rt>す</rt></ruby>きな<ruby class="furigana-word">料理<rt>りょうり</rt></ruby>を<ruby class="furigana-word">作<rt>つく</rt></ruby>ってあげました。<ruby class="furigana-word">姉<rt>あね</rt></ruby>は<ruby class="furigana-word">仕事<rt>しごと</rt></ruby>でパリに<ruby class="furigana-word">行<rt>い</rt></ruby>っていたので、<ruby class="furigana-word">母<rt>はは</rt></ruby>にメールだけ<ruby class="furigana-word">送<rt>おく</rt></ruby>り、<ruby class="furigana-word">帰国<rt>きこく</rt></ruby>したあと、パリで<ruby class="furigana-word">買<rt>か</rt></ruby>ったバッグをあげました。</p>
+      <p><span class="ln" data-ln="5"></span><ruby class="furigana-word">弟<rt>おとうと</rt></ruby>は「<ruby class="furigana-word">何<rt>なん</rt></ruby>でもしてあげます」と<ruby class="furigana-word">書<rt>か</rt></ruby>いた<ruby class="furigana-word">紙<rt>かみ</rt></ruby>を5<ruby class="furigana-word">枚<rt>まい</rt></ruby>あげました。<ruby class="furigana-word">母<rt>はは</rt></ruby>が<ruby class="furigana-word">弟<rt>おとうと</rt></ruby>に「じゃ、<ruby class="furigana-word">今度<rt>こんど</rt></ruby>のテストで100<ruby class="furigana-word">点<rt>てん</rt></ruby><ruby class="furigana-word">取<rt>と</rt></ruby>ってくれる？」というと、<ruby class="furigana-word">弟<rt>おとうと</rt></ruby>は「あ、それは<ruby class="furigana-word">無理<rt>むり</rt></ruby>！」と<ruby class="furigana-word">答<rt>こた</rt></ruby>えました。</p>
+    </div>
+  </section>
+
+  <section class="question-section">
+    <div class="question-block" data-q="1">
+      <div class="question-title"><ruby class="furigana-word">問<rt>と</rt></ruby>い　<ruby class="furigana-word">先週<rt>せんしゅう</rt></ruby>の<ruby class="furigana-word">日曜日<rt>にちようび</rt></ruby>について<ruby class="furigana-word">書<rt>か</rt></ruby>かれていることはどれですか。</div>
+      <ul class="options">
+        <li class="option-item" data-correct="false">1. <ruby class="furigana-word">母<rt>はは</rt></ruby>は<ruby class="furigana-word">姉<rt>あね</rt></ruby>にバッグをもらいました。</li>
+        <li class="option-item" data-correct="false">2. <ruby class="furigana-word">弟<rt>おとうと</rt></ruby>は<ruby class="furigana-word">母<rt>はは</rt></ruby>のために100<ruby class="furigana-word">点<rt>てん</rt></ruby>を<ruby class="furigana-word">取<rt>と</rt></ruby>ってあげました。</li>
+        <li class="option-item" data-correct="true">3. <ruby class="furigana-word">母<rt>はは</rt></ruby>は<ruby class="furigana-word">姉<rt>あね</rt></ruby>にメールをもらいました。</li>
+        <li class="option-item" data-correct="false">4. <ruby class="furigana-word">私<rt>わたし</rt></ruby>は<ruby class="furigana-word">母<rt>はは</rt></ruby>に<ruby class="furigana-word">料理<rt>りょうり</rt></ruby>を<ruby class="furigana-word">作<rt>つく</rt></ruby>ってあげました。</li>
+      </ul>
+      <div class="quiz-feedback" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <aside class="kotoba-box">
+    <span class="kotoba-tag">ことば</span>
+    <div class="kotoba-list">
+      <div class="kotoba-item"><ruby class="furigana-word">帰国<rt>きこく</rt></ruby>する<span class="gloss">To return to your home country</span></div>
+      <div class="kotoba-item"><ruby class="furigana-word">無理<rt>むり</rt></ruby>（な）<span class="gloss">Impossible, unreasonable</span></div>
+    </div>
+  </aside>
+
+  <p class="footer-note">Tip: Tap or click a kanji word to show or hide its reading. Use the buttons to show or hide all readings.</p>
 </main>
+
 <script>
-'use strict';
-const explanations = {
-  "1": "<ruby class=\"furigana-word\">正解<rt>せいかい</rt></ruby>は3です。<ruby class=\"furigana-word\">本文<rt>ほんぶん</rt></ruby>3<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>に「<ruby class=\"furigana-word\">姉<rt>あね</rt></ruby>は…<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>にメールだけ<ruby class=\"furigana-word\">送<rt>おく</rt></ruby>り」とあります。<ruby class=\"furigana-word\">姉<rt>あね</rt></ruby>は<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>にメールを<ruby class=\"furigana-word\">送<rt>おく</rt></ruby>りました。<ruby class=\"furigana-word\">選択肢<rt>せんたくし</rt></ruby>1のバッグは、<ruby class=\"furigana-word\">姉<rt>あね</rt></ruby>が<ruby class=\"furigana-word\">帰国<rt>きこく</rt></ruby>したあとに<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>へあげたものです。<ruby class=\"furigana-word\">選択肢<rt>せんたくし</rt></ruby>2では、<ruby class=\"furigana-word\">弟<rt>おとうと</rt></ruby>は100<ruby class=\"furigana-word\">点<rt>てん</rt></ruby>を<ruby class=\"furigana-word\">取<rt>と</rt></ruby>ったのではなく、<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>に<ruby class=\"furigana-word\">頼<rt>たの</rt></ruby>まれて「あ、それは<ruby class=\"furigana-word\">無理<rt>むり</rt></ruby>！」と<ruby class=\"furigana-word\">答<rt>こた</rt></ruby>えています。<ruby class=\"furigana-word\">選択肢<rt>せんたくし</rt></ruby>4の<ruby class=\"furigana-word\">料理<rt>りょうり</rt></ruby>を<ruby class=\"furigana-word\">作<rt>つく</rt></ruby>ったのは<ruby class=\"furigana-word\">日曜日<rt>にちようび</rt></ruby>ではなく、<ruby class=\"furigana-word\">本文<rt>ほんぶん</rt></ruby>2<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>にある<ruby class=\"furigana-word\">土曜日<rt>どようび</rt></ruby>です。"
-};
+const explanations = { "1": "3<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>に「<ruby class=\"furigana-word\">姉<rt>あね</rt></ruby>は<ruby class=\"furigana-word\">仕事<rt>しごと</rt></ruby>でパリに<ruby class=\"furigana-word\">行<rt>い</rt></ruby>っていたので、<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>にメールだけ<ruby class=\"furigana-word\">送<rt>おく</rt></ruby>り」とあるので、<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>の<ruby class=\"furigana-word\">日<rt>ひ</rt></ruby>の<ruby class=\"furigana-word\">日曜日<rt>にちようび</rt></ruby>に、<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>は<ruby class=\"furigana-word\">姉<rt>あね</rt></ruby>からメールをもらいました。<br>1のバッグは、3〜4<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>にあるように、<ruby class=\"furigana-word\">姉<rt>あね</rt></ruby>が「<ruby class=\"furigana-word\">帰国<rt>きこく</rt></ruby>したあと」にあげたものです。<br>2は、5〜6<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>で<ruby class=\"furigana-word\">母<rt>はは</rt></ruby>が「<ruby class=\"furigana-word\">今度<rt>こんど</rt></ruby>のテストで」と<ruby class=\"furigana-word\">言<rt>い</rt></ruby>っているので、テストはまだです。<br>4は、2<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>にあるように、<ruby class=\"furigana-word\">料理<rt>りょうり</rt></ruby>を<ruby class=\"furigana-word\">作<rt>つく</rt></ruby>ったのは<ruby class=\"furigana-word\">日曜日<rt>にちようび</rt></ruby>ではなく<ruby class=\"furigana-word\">土曜日<rt>どようび</rt></ruby>です。" };
+
+const RIGHT = '<ruby class="furigana-word">正解<rt>せいかい</rt></ruby>！ ';
+const WRONG = '<ruby class="furigana-word">不正解<rt>ふせいかい</rt></ruby>… ';
+
 document.querySelectorAll('.question-block').forEach(block => {
   const options = block.querySelectorAll('.option-item');
   options.forEach(option => option.addEventListener('click', () => {
@@ -145,7 +290,7 @@ document.querySelectorAll('.question-block').forEach(block => {
     if (!correct) block.querySelector('.option-item[data-correct="true"]').classList.add('correct');
     options.forEach(item => item.classList.add('locked'));
     const feedback = block.querySelector('.quiz-feedback');
-    feedback.innerHTML = (correct ? '正解！ ' : '不正解… ') + explanations[block.dataset.q];
+    feedback.innerHTML = (correct ? RIGHT : WRONG) + explanations[block.dataset.q];
     feedback.classList.add('show');
   }));
 });

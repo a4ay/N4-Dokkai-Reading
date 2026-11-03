@@ -263,7 +263,7 @@ ruby.furigana-word.revealed rt {
         <li class="option-item" data-correct="false">3. <ruby class="furigana-word">松田順<rt>まつだじゅん</rt></ruby>さんのお<ruby class="furigana-word">父<rt>とう</rt></ruby>さんがポンさんにお<ruby class="furigana-word">金<rt>かね</rt></ruby>を<ruby class="furigana-word">貸<rt>か</rt></ruby>したから。</li>
         <li class="option-item" data-correct="false">4. <ruby class="furigana-word">松田順<rt>まつだじゅん</rt></ruby>さんがポンさんの<ruby class="furigana-word">息子<rt>むすこ</rt></ruby>さんにお<ruby class="furigana-word">金<rt>かね</rt></ruby>を<ruby class="furigana-word">借<rt>か</rt></ruby>りたから。</li>
       </ul>
-      <div class="quiz-feedback"></div>
+      <div class="quiz-feedback" aria-live="polite"></div>
     </div>
 
     <div class="question-block" data-q="2">
@@ -274,7 +274,7 @@ ruby.furigana-word.revealed rt {
         <li class="option-item" data-correct="false">3. <ruby class="furigana-word">道<rt>みち</rt></ruby>がわからなくなったから。</li>
         <li class="option-item" data-correct="false">4. おみやげが<ruby class="furigana-word">高<rt>たか</rt></ruby>かったから。</li>
       </ul>
-      <div class="quiz-feedback"></div>
+      <div class="quiz-feedback" aria-live="polite"></div>
     </div>
 
     <div class="question-block" data-q="3">
@@ -285,7 +285,7 @@ ruby.furigana-word.revealed rt {
         <li class="option-item" data-correct="true">3. ポンさんが<ruby class="furigana-word">日本人<rt>にほんじん</rt></ruby>にお<ruby class="furigana-word">金<rt>かね</rt></ruby>を<ruby class="furigana-word">貸<rt>か</rt></ruby>したこと</li>
         <li class="option-item" data-correct="false">4. <ruby class="furigana-word">日本人<rt>にほんじん</rt></ruby>がポンさんにお<ruby class="furigana-word">金<rt>かね</rt></ruby>を<ruby class="furigana-word">貸<rt>か</rt></ruby>したこと</li>
       </ul>
-      <div class="quiz-feedback"></div>
+      <div class="quiz-feedback" aria-live="polite"></div>
     </div>
 
     <div class="question-block" data-q="4">
@@ -296,7 +296,7 @@ ruby.furigana-word.revealed rt {
         <li class="option-item" data-correct="false">3. <ruby class="furigana-word">松田順<rt>まつだじゅん</rt></ruby>さんがチェンマイでお<ruby class="furigana-word">金<rt>かね</rt></ruby>を<ruby class="furigana-word">借<rt>か</rt></ruby>りて、お<ruby class="furigana-word">礼<rt>れい</rt></ruby>を<ruby class="furigana-word">言<rt>い</rt></ruby>ったこと</li>
         <li class="option-item" data-correct="false">4. <ruby class="furigana-word">松田順<rt>まつだじゅん</rt></ruby>さんがチェンマイで<ruby class="furigana-word">助<rt>たす</rt></ruby>けてもらった<ruby class="furigana-word">人<rt>ひと</rt></ruby>にお<ruby class="furigana-word">礼<rt>れい</rt></ruby>を<ruby class="furigana-word">言<rt>い</rt></ruby>ったこと</li>
       </ul>
-      <div class="quiz-feedback"></div>
+      <div class="quiz-feedback" aria-live="polite"></div>
     </div>
   </section>
 
@@ -318,22 +318,21 @@ const explanations = {
   "1": "<ruby class=\"furigana-word\">正解<rt>せいかい</rt></ruby>は2です。" +
        "「<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんのお<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんは30<ruby class=\"furigana-word\">年前<rt>ねんまえ</rt></ruby>、タイのチェンマイへ<ruby class=\"furigana-word\">旅行<rt>りょこう</rt></ruby>に<ruby class=\"furigana-word\">行<rt>い</rt></ruby>きました。」（5<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>）、" +
        "「ポンさんがお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">貸<rt>か</rt></ruby>してくれたのです。」（8<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>）。" +
-       "30<ruby class=\"furigana-word\">年前<rt>ねんまえ</rt></ruby>にポンさんからお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りたのは、<ruby class=\"furigana-word\">松田順<rt>まつだじゅん</rt></ruby>さんではなく、お<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんです。" +
-       "お<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんは<ruby class=\"furigana-word\">去年<rt>きょねん</rt></ruby><ruby class=\"furigana-word\">亡<rt>な</rt></ruby>くなったので、15<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>に「<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんはお<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんの<ruby class=\"furigana-word\">代<rt>か</rt></ruby>わりにお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">返<rt>かえ</rt></ruby>して」とあります。" +
-       "1と4は、お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りた<ruby class=\"furigana-word\">人<rt>ひと</rt></ruby>がちがいます。3は<ruby class=\"furigana-word\">反対<rt>はんたい</rt></ruby>です。お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">貸<rt>か</rt></ruby>したのはポンさんです。",
+       "<br>30<ruby class=\"furigana-word\">年前<rt>ねんまえ</rt></ruby>にポンさんからお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りたのは<ruby class=\"furigana-word\">松田順<rt>まつだじゅん</rt></ruby>さんではなくお<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんで、お<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんが<ruby class=\"furigana-word\">去年<rt>きょねん</rt></ruby><ruby class=\"furigana-word\">亡<rt>な</rt></ruby>くなったので、15<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>に「<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんはお<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんの<ruby class=\"furigana-word\">代<rt>か</rt></ruby>わりにお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">返<rt>かえ</rt></ruby>して」とあります。" +
+       "<br>1と4は、お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りた<ruby class=\"furigana-word\">人<rt>ひと</rt></ruby>がちがいます。3は<ruby class=\"furigana-word\">反対<rt>はんたい</rt></ruby>で、お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">貸<rt>か</rt></ruby>したのはポンさんです。",
   "2": "<ruby class=\"furigana-word\">正解<rt>せいかい</rt></ruby>は2です。" +
        "「<ruby class=\"furigana-word\">財布<rt>さいふ</rt></ruby>がないことに<ruby class=\"furigana-word\">気<rt>き</rt></ruby>がつきました。<ruby class=\"furigana-word\">盗<rt>ぬす</rt></ruby>まれてしまったのです。」（6〜7<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>）。" +
-       "だれかが<ruby class=\"furigana-word\">財布<rt>さいふ</rt></ruby>を<ruby class=\"furigana-word\">盗<rt>ぬす</rt></ruby>んだ（＝<ruby class=\"furigana-word\">取<rt>と</rt></ruby>った）ので、お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>が<ruby class=\"furigana-word\">払<rt>はら</rt></ruby>えなくなって、<ruby class=\"furigana-word\">困<rt>こま</rt></ruby>りました。" +
-       "お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">忘<rt>わす</rt></ruby>れたのではありません。3と4は、<ruby class=\"furigana-word\">文章<rt>ぶんしょう</rt></ruby>に<ruby class=\"furigana-word\">書<rt>か</rt></ruby>いてありません。",
+       "<br>だれかが<ruby class=\"furigana-word\">財布<rt>さいふ</rt></ruby>を<ruby class=\"furigana-word\">盗<rt>ぬす</rt></ruby>んだ（＝<ruby class=\"furigana-word\">取<rt>と</rt></ruby>った）ので、お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>が<ruby class=\"furigana-word\">払<rt>はら</rt></ruby>えなくなって、<ruby class=\"furigana-word\">困<rt>こま</rt></ruby>りました。" +
+       "<br>お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">忘<rt>わす</rt></ruby>れたのではありません。3と4は、<ruby class=\"furigana-word\">文章<rt>ぶんしょう</rt></ruby>に<ruby class=\"furigana-word\">書<rt>か</rt></ruby>いてありません。",
   "3": "<ruby class=\"furigana-word\">正解<rt>せいかい</rt></ruby>は3です。" +
        "「その<ruby class=\"furigana-word\">話<rt>はなし</rt></ruby>」は、10<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>の「<ruby class=\"furigana-word\">何度<rt>なんど</rt></ruby>もその<ruby class=\"furigana-word\">話<rt>はなし</rt></ruby>をして」の<ruby class=\"furigana-word\">話<rt>はなし</rt></ruby>と<ruby class=\"furigana-word\">同<rt>おな</rt></ruby>じで、5〜9<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>に<ruby class=\"furigana-word\">書<rt>か</rt></ruby>いてある<ruby class=\"furigana-word\">話<rt>はなし</rt></ruby>です。" +
-       "お<ruby class=\"furigana-word\">店<rt>みせ</rt></ruby>の<ruby class=\"furigana-word\">人<rt>ひと</rt></ruby>のポンさんが、<ruby class=\"furigana-word\">日本人<rt>にほんじん</rt></ruby>の<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんのお<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんにお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">貸<rt>か</rt></ruby>してくれました。" +
-       "ポンさんの<ruby class=\"furigana-word\">息子<rt>むすこ</rt></ruby>さんは、この<ruby class=\"furigana-word\">話<rt>はなし</rt></ruby>を<ruby class=\"furigana-word\">知<rt>し</rt></ruby>っていました。4は、<ruby class=\"furigana-word\">貸<rt>か</rt></ruby>した<ruby class=\"furigana-word\">人<rt>ひと</rt></ruby>と<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りた<ruby class=\"furigana-word\">人<rt>ひと</rt></ruby>が<ruby class=\"furigana-word\">反対<rt>はんたい</rt></ruby>です。",
+       "<br>お<ruby class=\"furigana-word\">店<rt>みせ</rt></ruby>の<ruby class=\"furigana-word\">人<rt>ひと</rt></ruby>のポンさんが、<ruby class=\"furigana-word\">日本人<rt>にほんじん</rt></ruby>の<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんのお<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんにお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">貸<rt>か</rt></ruby>してくれました。" +
+       "ポンさんの<ruby class=\"furigana-word\">息子<rt>むすこ</rt></ruby>さんは、この<ruby class=\"furigana-word\">話<rt>はなし</rt></ruby>を<ruby class=\"furigana-word\">知<rt>し</rt></ruby>っていました。<br>4は、<ruby class=\"furigana-word\">貸<rt>か</rt></ruby>した<ruby class=\"furigana-word\">人<rt>ひと</rt></ruby>と<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りた<ruby class=\"furigana-word\">人<rt>ひと</rt></ruby>が<ruby class=\"furigana-word\">反対<rt>はんたい</rt></ruby>です。",
   "4": "<ruby class=\"furigana-word\">正解<rt>せいかい</rt></ruby>は1です。" +
        "「<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんはお<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんの<ruby class=\"furigana-word\">代<rt>か</rt></ruby>わりにお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">返<rt>かえ</rt></ruby>して、『ありがとうございました』と<ruby class=\"furigana-word\">何回<rt>なんかい</rt></ruby>も<ruby class=\"furigana-word\">言<rt>い</rt></ruby>いました。」（15〜16<ruby class=\"furigana-word\">行目<rt>ぎょうめ</rt></ruby>）。" +
-       "2は、<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんが<ruby class=\"furigana-word\">自分<rt>じぶん</rt></ruby>で<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りたお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>ではありません。<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りたのはお<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんです。" +
-       "3は、お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りたのではなく、<ruby class=\"furigana-word\">返<rt>かえ</rt></ruby>しました。" +
-       "4は、<ruby class=\"furigana-word\">助<rt>たす</rt></ruby>けてもらったのは<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんではなく、お<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんです。"
+       "<br>2は、<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんが<ruby class=\"furigana-word\">自分<rt>じぶん</rt></ruby>で<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りたお<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>ではなく、<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りたのはお<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんです。" +
+       "<br>3は、お<ruby class=\"furigana-word\">金<rt>かね</rt></ruby>を<ruby class=\"furigana-word\">借<rt>か</rt></ruby>りたのではなく、<ruby class=\"furigana-word\">返<rt>かえ</rt></ruby>しました。" +
+       "<br>4は、<ruby class=\"furigana-word\">助<rt>たす</rt></ruby>けてもらったのは<ruby class=\"furigana-word\">松田<rt>まつだ</rt></ruby>さんではなく、お<ruby class=\"furigana-word\">父<rt>とう</rt></ruby>さんです。"
 };
 
 
