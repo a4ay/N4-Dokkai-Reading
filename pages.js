@@ -18,4 +18,8 @@ const PAGES = [
   "Problem-14_Personal-Essay.html",
   "Problem-15_Personal-Essay.html",
   "Problem-16_Mothers-Day.html",
+  "Problem-19_Exam-Registration.html",
+  "Problem-20_Class-C-Party.html",
+  "Problem-37_Chiang-Mai-Article.html",
+  "Problem-39_Bookstore-Textbook-Sale.html",
 ];
