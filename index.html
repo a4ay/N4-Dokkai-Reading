@@ -129,6 +129,30 @@
       color: var(--text-muted);
       font-size: 0.9rem;
     }
+
+    /* Completed pages (marked with Mark complete on the page) */
+    .progress {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #15803d;
+      margin: -8px 0 16px;
+    }
+
+    .page-list a.done {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+
+    .done-mark {
+      margin-left: auto;
+      color: #15803d;
+      font-weight: bold;
+      visibility: hidden;
+    }
+
+    .page-list a.done .done-mark {
+      visibility: visible;
+    }
   </style>
 </head>
 
@@ -147,6 +171,8 @@
     <div class="instructions">
       問題を選んでください。(Choose a reading passage to start.)
     </div>
+
+    <div class="progress" id="progress"></div>
 
     <ul class="page-list" id="pageList"></ul>
 
@@ -176,16 +202,39 @@
       const li = document.createElement('li');
 
       li.innerHTML = `
-        <a href="pages/${encodeURIComponent(file)}">
+        <a href="pages/${encodeURIComponent(file)}" data-file="${file}">
           <span class="page-num">${num}</span>
           <span>
             <span class="page-title">${title}</span>
             <span class="page-sub">${num ? label : ''}</span>
           </span>
+          <span class="done-mark" aria-label="Completed">✓</span>
         </a>`;
 
       pageList.appendChild(li);
     });
+
+    // Show which pages are completed. Each page's Mark complete button saves its file name
+    // in localStorage under "dokkai-completed".
+    function loadCompleted() {
+      try { return JSON.parse(localStorage.getItem('dokkai-completed')) || {}; } catch (e) { return {}; }
+    }
+
+    function showCompleted() {
+      const done = loadCompleted();
+      let count = 0;
+      pageList.querySelectorAll('a[data-file]').forEach(a => {
+        const isDone = Boolean(done[a.dataset.file]);
+        a.classList.toggle('done', isDone);
+        if (isDone) count++;
+      });
+      document.getElementById('progress').textContent = `${count} / ${PAGES.length} completed`;
+    }
+
+    showCompleted();
+    // Also refresh after coming back with the Back button, or when another tab changes it.
+    window.addEventListener('pageshow', showCompleted);
+    window.addEventListener('storage', showCompleted);
   </script>
 
 </body>

@@ -26,8 +26,8 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: "Hirag
 .problem-title { font-weight: bold; font-size: 1.15rem; }
 .instruction { font-size: 1rem; line-height: 2.2; margin: 4px 0 0; }
 .controls { display: flex; gap: 10px; flex-wrap: wrap; margin: 16px 0 22px; }
-.controls button { border: 1px solid #cbd5e1; border-radius: 7px; background: #fff; color: var(--text); padding: 9px 14px; font-size: 0.92rem; cursor: pointer; }
-.controls button:hover { background: var(--hover-bg); }
+.controls button, .progress-controls button { border: 1px solid #cbd5e1; border-radius: 7px; background: #fff; color: var(--text); padding: 9px 14px; font-size: 0.92rem; cursor: pointer; }
+.controls button:hover, .progress-controls button:hover { background: var(--hover-bg); }
 
 /* Passage area: holds lead-in, document and the line-number gutter */
 .passage { position: relative; padding-right: 2.75rem; font-size: 1.25rem; line-height: 2.8; overflow-wrap: anywhere; }
@@ -122,13 +122,23 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: "Hirag
 .question-block + .question-block { margin-top: 28px; }
 .question-title { font-size: 1.15rem; font-weight: bold; line-height: 2.4; margin-bottom: 12px; }
 .options { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.option-item { border: 2px solid var(--border); border-radius: 8px; padding: 6px 14px; cursor: pointer; line-height: 2.4; transition: background 0.15s, border-color 0.15s; }
-.option-item:not(.locked):hover { background: var(--hover-bg); }
+.option-item { position: relative; border: 2px solid var(--border); border-radius: 8px; padding: 6px 58px 6px 14px; line-height: 2.4; transition: background 0.15s, border-color 0.15s; }
 .option-item.correct { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-text); }
 .option-item.wrong { background: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-text); }
-.option-item.locked { cursor: default; pointer-events: none; }
+.option-item.locked { pointer-events: none; }
+/* Check button at the right end of each option, the only part that answers (added by the quiz script 6G) */
+.option-check { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; padding: 0; border: 2px solid #cbd5e1; border-radius: 50%; background: #fff; color: #fff; font-size: 1.05rem; font-weight: bold; line-height: 1; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
+.option-check:hover { border-color: var(--text-muted); background: var(--hover-bg); }
+.option-check:disabled { cursor: default; }
+.option-item.correct .option-check { border-color: var(--correct-border); background: var(--correct-border); }
+.option-item.correct .option-check::after { content: "✓"; }
+.option-item.wrong .option-check { border-color: var(--wrong-border); background: var(--wrong-border); }
+.option-item.wrong .option-check::after { content: "✗"; }
 .quiz-feedback { display: none; margin-top: 14px; padding: 12px 14px; border-radius: 8px; background: var(--hover-bg); line-height: 2.4; }
 .quiz-feedback.show { display: block; }
+/* Mark complete and Reset, after the last question (added by the quiz script 6G) */
+.progress-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+#completeBtn.done { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-text); font-weight: bold; }
 .footer-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 24px; }
 
 /* 情報検索 spread: questions left (2/5), document right (3/5) */
@@ -341,19 +351,76 @@ const explanations = {
 const RIGHT = '<ruby class="furigana-word">正解<rt>せいかい</rt></ruby>！ ';
 const WRONG = '<ruby class="furigana-word">不正解<rt>ふせいかい</rt></ruby>… ';
 
+// Each option gets a check button at its right end. Only that button answers, so the
+// words in the option can be tapped for their readings.
 document.querySelectorAll('.question-block').forEach(block => {
   const options = block.querySelectorAll('.option-item');
-  options.forEach(option => option.addEventListener('click', () => {
-    if (option.classList.contains('locked')) return;
-    const correct = option.dataset.correct === 'true';
-    option.classList.add(correct ? 'correct' : 'wrong');
-    if (!correct) block.querySelector('.option-item[data-correct="true"]').classList.add('correct');
-    options.forEach(item => item.classList.add('locked'));
-    const feedback = block.querySelector('.quiz-feedback');
-    feedback.innerHTML = (correct ? RIGHT : WRONG) + explanations[block.dataset.q];
-    feedback.classList.add('show');
-  }));
+  options.forEach((option, i) => {
+    const check = document.createElement('button');
+    check.type = 'button';
+    check.className = 'option-check';
+    check.setAttribute('aria-label', `Answer ${i + 1}`);
+    option.append(check);
+    check.addEventListener('click', () => {
+      if (option.classList.contains('locked')) return;
+      const correct = option.dataset.correct === 'true';
+      option.classList.add(correct ? 'correct' : 'wrong');
+      if (!correct) block.querySelector('.option-item[data-correct="true"]').classList.add('correct');
+      options.forEach(item => {
+        item.classList.add('locked');
+        item.querySelector('.option-check').disabled = true;
+      });
+      const feedback = block.querySelector('.quiz-feedback');
+      feedback.innerHTML = (correct ? RIGHT : WRONG) + explanations[block.dataset.q];
+      feedback.classList.add('show');
+    });
+  });
 });
+
+// Mark complete and Reset. Completed pages are saved in localStorage under "dokkai-completed"
+// as { "<page file name>": time marked }; index.html reads the same key.
+(() => {
+  const KEY = 'dokkai-completed';
+  const file = decodeURIComponent(location.pathname.split('/').pop());
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } };
+  const save = data => { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {} };
+
+  const bar = document.createElement('div');
+  bar.className = 'progress-controls';
+  bar.innerHTML = '<button id="completeBtn" type="button"></button><button id="resetBtn" type="button">Reset</button>';
+  document.querySelector('.question-section').append(bar);
+  const completeBtn = bar.querySelector('#completeBtn');
+
+  function show(done) {
+    completeBtn.textContent = done ? '✓ Completed' : 'Mark complete';
+    completeBtn.classList.toggle('done', done);
+  }
+
+  completeBtn.addEventListener('click', () => {
+    const data = load();
+    if (data[file]) delete data[file]; else data[file] = Date.now();
+    save(data);
+    show(Boolean(data[file]));
+  });
+
+  bar.querySelector('#resetBtn').addEventListener('click', () => {
+    const data = load();
+    delete data[file];
+    save(data);
+    show(false);
+    document.querySelectorAll('.question-block').forEach(block => {
+      block.querySelectorAll('.option-item').forEach(item => {
+        item.classList.remove('correct', 'wrong', 'locked');
+        item.querySelector('.option-check').disabled = false;
+      });
+      const feedback = block.querySelector('.quiz-feedback');
+      feedback.classList.remove('show');
+      feedback.innerHTML = '';
+    });
+  });
+
+  show(Boolean(load()[file]));
+})();
 </script>
 </body>
 </html>
