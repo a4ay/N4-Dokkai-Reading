@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>もんだい13 — 七五三</title><style>
+:root{--bg:#f8fafc;--card-bg:#fff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--ruby-color:#dc2626;--hover-bg:#f1f5f9;--note-border:#f59e0b;--note-bg:#fffdf5;--frame-border:#94a3b8;--frame-bg:#fff;--gutter-text:#94a3b8;--correct-bg:#dcfce7;--correct-border:#22c55e;--correct-text:#15803d;--wrong-bg:#fee2e2;--wrong-border:#ef4444;--wrong-text:#b91c1c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}
+.container{max-width:720px;margin:24px auto;padding:28px 32px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;box-shadow:0 4px 18px #0f172a0a}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:18px}
+button{border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:9px 14px;font-size:.92rem;cursor:pointer;color:var(--text)}
+button:hover{background:var(--hover-bg)}button:focus-visible,.option-item:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.problem-header{margin-bottom:24px}.type-tag{display:inline-block;font-size:.8rem;color:var(--text-muted);border-bottom:2px solid var(--border);margin-bottom:8px}
+.problem-title{font-weight:bold;font-size:1.15rem}.instruction{font-size:1rem;line-height:1.9;margin:4px 0 0}
+.passage{position:relative;padding-right:2.75rem;font-size:1.18rem;line-height:2.8}
+.ln{position:relative}.ln::after{content:attr(data-ln);position:absolute;right:-2.3rem;top:0;font-size:.75rem;line-height:3.3rem;color:var(--gutter-text);user-select:none;pointer-events:none}
+.line{min-height:2.8em}.gap{height:.75rem}.doc-frame{border:1.5px solid var(--frame-border);border-radius:4px;background:var(--frame-bg);padding:12px 16px;margin:8px 0}
+.reading-box p{ text-indent:1em;margin:0}.note-ref{font-size:.55em;color:var(--text-muted)}
+.footnotes{font-size:.88rem;line-height:2.1;color:var(--text-muted);margin-top:8px}
+.question-section{border-top:1px dashed var(--border);margin-top:30px;padding-top:22px}
+.question-title{font-size:1.08rem;font-weight:bold;margin-bottom:12px}
+.options{display:flex;flex-direction:column;gap:9px;padding:0;margin:0;list-style:none}
+.option-item{border:2px solid var(--border);border-radius:8px;padding:9px 12px;cursor:pointer;line-height:1.8}
+.option-item:hover:not(.locked){background:var(--hover-bg)}.option-item.correct{background:var(--correct-bg);border-color:var(--correct-border);color:var(--correct-text)}
+.option-item.wrong{background:var(--wrong-bg);border-color:var(--wrong-border);color:var(--wrong-text)}
+.option-item.locked{cursor:default;pointer-events:none}
+.quiz-feedback{display:none;margin-top:12px;padding:12px;border-radius:8px;line-height:1.8;background:#f8fafc;border:1px solid var(--border)}
+.quiz-feedback.show{display:block}.kotoba-box{margin-top:28px}.kotoba-tag{display:inline-block;border:1.5px solid var(--text);border-radius:6px;padding:0 10px;font-weight:bold}
+.kotoba-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 20px;line-height:2.3;margin-top:8px}
+.kotoba-item .gloss{color:var(--text-muted);font-size:.82rem;margin-left:.5em}
+ruby.furigana-word{user-select:none;cursor:pointer;ruby-position:over}
+ruby.furigana-word rt{visibility:hidden;opacity:0;color:var(--ruby-color);font-size:.65em;font-weight:bold;transition:opacity .18s ease-in-out}
+ruby.furigana-word.revealed rt{visibility:visible;opacity:1}
+@media(max-width:600px){.container{margin:0;padding:20px 16px;border-radius:0}.passage{font-size:1.05rem;padding-right:2rem}.ln::after{right:-1.8rem}}
+</style></head><body>
+<main class="container">
+<div class="toolbar"><button id="showAllBtn" type="button">Show All Furigana</button><button id="hideAllBtn" type="button">Hide All Furigana</button></div>
+<header class="problem-header"><div class="type-tag"><ruby class="furigana-word">説明<rt>せつめい</rt></ruby><ruby class="furigana-word">文<rt>ぶん</rt></ruby></div><div class="problem-title">もんだい 13</div>
+<p class="instruction"><ruby class="furigana-word">次<rt>つぎ</rt></ruby>の<ruby class="furigana-word">文章<rt>ぶんしょう</rt></ruby>を<ruby class="furigana-word">読<rt>よ</rt></ruby>んで、<ruby class="furigana-word">質問<rt>しつもん</rt></ruby>に<ruby class="furigana-word">答<rt>こた</rt></ruby>えてください。<ruby class="furigana-word">答<rt>こた</rt></ruby>えは、１・２・３・４から、いちばんいいものを１つ<ruby class="furigana-word">選<rt>えら</rt></ruby>んでください。</p></header>
+<section class="passage"><div class="reading-box">
+<p><span class="ln" data-ln="1"></span>11<ruby class="furigana-word">月<rt>がつ</rt></ruby>に<ruby class="furigana-word">神社<rt>じんじゃ</rt></ruby>に<ruby class="furigana-word">行<rt>い</rt></ruby>くと、きれいな<ruby class="furigana-word">着物<rt>きもの</rt></ruby>を<ruby class="furigana-word">着<rt>き</rt></ruby>た<ruby class="furigana-word">子<rt>こ</rt></ruby>どもたちを<ruby class="furigana-word">見<rt>み</rt></ruby>ることがあります。これは「<ruby class="furigana-word">七五三<rt>しちごさん</rt></ruby>」といわれるお<ruby class="furigana-word">祝<rt>いわ</rt></ruby>いです。<ruby class="furigana-word">男<rt>おとこ</rt></ruby>の<ruby class="furigana-word">子<rt>こ</rt></ruby>が３<ruby class="furigana-word">歳<rt>さい</rt></ruby>と５<ruby class="furigana-word">歳<rt>さい</rt></ruby>、<ruby class="furigana-word">女<rt>おんな</rt></ruby>の<ruby class="furigana-word">子<rt>こ</rt></ruby>が３<ruby class="furigana-word">歳<rt>さい</rt></ruby>と７<ruby class="furigana-word">歳<rt>さい</rt></ruby>のとき、<ruby class="furigana-word">親<rt>おや</rt></ruby>は<ruby class="furigana-word">子<rt>こ</rt></ruby>どもを<ruby class="furigana-word">連<rt>つ</rt></ruby>れて、<ruby class="furigana-word">神社<rt>じんじゃ</rt></ruby>やお<ruby class="furigana-word">寺<rt>てら</rt></ruby>に<ruby class="furigana-word">行<rt>い</rt></ruby>き、<ruby class="furigana-word">子<rt>こ</rt></ruby>どもが<ruby class="furigana-word">元気<rt>げんき</rt></ruby>に<ruby class="furigana-word">大<rt>おお</rt></ruby>きくなることを<ruby class="furigana-word">祈<rt>いの</rt></ruby>ります。</p>
+<p><span class="ln" data-ln="5"></span><ruby class="furigana-word">着物<rt>きもの</rt></ruby>は<ruby class="furigana-word">買<rt>か</rt></ruby>うと<ruby class="furigana-word">高<rt>たか</rt></ruby>いので、<ruby class="furigana-word">今<rt>いま</rt></ruby>は<ruby class="furigana-word">買<rt>か</rt></ruby>わないで<ruby class="furigana-word">借<rt>か</rt></ruby>りる<ruby class="furigana-word">人<rt>ひと</rt></ruby>が<ruby class="furigana-word">多<rt>おお</rt></ruby>いです。きれいな<ruby class="furigana-word">着物<rt>きもの</rt></ruby>を<ruby class="furigana-word">着<rt>き</rt></ruby>たのだから、<ruby class="furigana-word">親<rt>おや</rt></ruby>はたくさん<ruby class="furigana-word">写真<rt>しゃしん</rt></ruby>をとろうとします。でも、いつもは<ruby class="furigana-word">着<rt>き</rt></ruby>ない<ruby class="furigana-word">着物<rt>きもの</rt></ruby>を<ruby class="furigana-word">着<rt>き</rt></ruby>て、<ruby class="furigana-word">疲<rt>つか</rt></ruby>れた<ruby class="furigana-word">子<rt>こ</rt></ruby>どもが<ruby class="furigana-word">笑<rt>わら</rt></ruby>ってくれなくて、<ruby class="furigana-word">困<rt>こま</rt></ruby>る<ruby class="furigana-word">親<rt>おや</rt></ruby>も<ruby class="furigana-word">多<rt>おお</rt></ruby>いようです。</p></div></section>
+<section class="question-section"><div class="question-block" data-q="1"><div class="question-title"><ruby class="furigana-word">問<rt>と</rt></ruby>い この<ruby class="furigana-word">文章<rt>ぶんしょう</rt></ruby>から「<ruby class="furigana-word">七五三<rt>しちごさん</rt></ruby>」について、わかることは<ruby class="furigana-word">何<rt>なん</rt></ruby>ですか。</div>
+<ul class="options"><li class="option-item" tabindex="0" role="button" data-correct="false">1. <ruby class="furigana-word">女<rt>おんな</rt></ruby>の<ruby class="furigana-word">子<rt>こ</rt></ruby>も<ruby class="furigana-word">男<rt>おとこ</rt></ruby>の<ruby class="furigana-word">子<rt>こ</rt></ruby>も７<ruby class="furigana-word">歳<rt>さい</rt></ruby>と５<ruby class="furigana-word">歳<rt>さい</rt></ruby>と３<ruby class="furigana-word">歳<rt>さい</rt></ruby>のとき、お<ruby class="furigana-word">祝<rt>いわ</rt></ruby>いをします。</li><li class="option-item" tabindex="0" role="button" data-correct="true">2. <ruby class="furigana-word">子<rt>こ</rt></ruby>どもが<ruby class="furigana-word">元気<rt>げんき</rt></ruby>に<ruby class="furigana-word">大<rt>おお</rt></ruby>きくなることを<ruby class="furigana-word">願<rt>ねが</rt></ruby>って、<ruby class="furigana-word">神社<rt>じんじゃ</rt></ruby>やお<ruby class="furigana-word">寺<rt>てら</rt></ruby>に<ruby class="furigana-word">行<rt>い</rt></ruby>きます。</li><li class="option-item" tabindex="0" role="button" data-correct="false">3. <ruby class="furigana-word">子<rt>こ</rt></ruby>どものために<ruby class="furigana-word">着物<rt>きもの</rt></ruby>を<ruby class="furigana-word">買<rt>か</rt></ruby>う<ruby class="furigana-word">人<rt>ひと</rt></ruby>が<ruby class="furigana-word">借<rt>か</rt></ruby>りる<ruby class="furigana-word">人<rt>ひと</rt></ruby>より<ruby class="furigana-word">多<rt>おお</rt></ruby>いです。</li><li class="option-item" tabindex="0" role="button" data-correct="false">4. <ruby class="furigana-word">子<rt>こ</rt></ruby>どもが<ruby class="furigana-word">着物<rt>きもの</rt></ruby>を<ruby class="furigana-word">着<rt>き</rt></ruby>て<ruby class="furigana-word">笑<rt>わら</rt></ruby>っている<ruby class="furigana-word">写真<rt>しゃしん</rt></ruby>がとれることが<ruby class="furigana-word">多<rt>おお</rt></ruby>いです。</li></ul><div class="quiz-feedback" aria-live="polite"></div></div></section>
+<aside class="kotoba-box"><span class="kotoba-tag">ことば</span><div class="kotoba-list"><div class="kotoba-item"><ruby class="furigana-word">神社<rt>じんじゃ</rt></ruby><span class="gloss">Shinto shrine</span></div><div class="kotoba-item"><ruby class="furigana-word">お祝い<rt>おいわい</rt></ruby><span class="gloss">Celebration</span></div><div class="kotoba-item"><ruby class="furigana-word">祈る<rt>いのる</rt></ruby><span class="gloss">To pray</span></div><div class="kotoba-item"><ruby class="furigana-word">着物<rt>きもの</rt></ruby><span class="gloss">Kimono</span></div><div class="kotoba-item"><ruby class="furigana-word">(お)寺<rt>（お）てら</rt></ruby><span class="gloss">Buddhist temple</span></div></div></aside>
+</main>
+<script>window.explanations={"1":"正解は2です。本文前半に、親は子どもを連れて神社やお寺に行き、「子どもが元気に大きくなることを祈ります」とあります。1は男女の年齢が同じではなく、3は着物を買わずに借りる人が多いと書かれ、4は子どもが疲れて笑わないことも多いとあります。"};</script><script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const words=[...document.querySelectorAll('ruby.furigana-word')];
+  words.forEach(node=>{
+    node.addEventListener('dblclick',event=>{
+      event.preventDefault();
+      node.classList.toggle('revealed');
+    });
+    node.setAttribute('title','Double-click to show or hide furigana');
+  });
+  const show=document.getElementById('showAllBtn');
+  const hide=document.getElementById('hideAllBtn');
+  if(show) show.addEventListener('click',()=>words.forEach(node=>node.classList.add('revealed')));
+  if(hide) hide.addEventListener('click',()=>words.forEach(node=>node.classList.remove('revealed')));
+  document.querySelectorAll('.question-block').forEach(block=>{
+    const options=[...block.querySelectorAll('.option-item')];
+    options.forEach(opt=>opt.addEventListener('click',()=>{
+      if(block.dataset.answered==='true') return;
+      block.dataset.answered='true';
+      const ok=opt.dataset.correct==='true';
+      opt.classList.add(ok?'correct':'wrong');
+      if(!ok){
+        const answer=options.find(o=>o.dataset.correct==='true');
+        if(answer) answer.classList.add('correct');
+      }
+      options.forEach(o=>o.classList.add('locked'));
+      const fb=block.querySelector('.quiz-feedback');
+      const explanation=(window.explanations||{})[block.dataset.q]||'解説はありません。';
+      fb.textContent=(ok?'正解！ ':'不正解。 ') + explanation;
+      fb.classList.add('show');
+    }));
+  });
+});
+</script>
+</body></html>

@@ -11,5 +11,10 @@ const PAGES = [
   "Problem-07_100-Yen-Shop.html",
   "Problem-08_Event-Guide.html",
   "Problem-09_Notice-Schedule.html",
-  "Problem-10_Lisa-Office-Souvenir.html"
+  "Problem-10_Lisa-Office-Souvenir.html",
+  "Problem-11_Frozen-Sushi-Instructions.html",
+  "Problem-12_Written-Notice.html",
+  "Problem-13_Explanatory-Text.html",
+  "Problem-14_Personal-Essay.html",
+  "Problem-15_Personal-Essay.html",
 ];
