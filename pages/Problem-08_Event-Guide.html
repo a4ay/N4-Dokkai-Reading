@@ -13,12 +13,94 @@
 .question-section{border-top:1px dashed var(--border);margin-top:32px;padding-top:24px}.question-title{font-size:1.15rem;font-weight:bold;margin-bottom:12px}.question-block+.question-block{margin-top:28px}.options{display:flex;flex-direction:column;gap:10px;list-style:none;padding:0;margin:0}.option-item{border:2px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;line-height:1.8;transition:.15s}.option-item:hover:not(.locked){background:var(--hover-bg)}.option-item.correct{background:var(--correct-bg);border-color:var(--correct-border);color:var(--correct-text)}.option-item.wrong{background:var(--wrong-bg);border-color:var(--wrong-border);color:var(--wrong-text)}.option-item.locked{cursor:default;pointer-events:none}.quiz-feedback{display:none;margin-top:12px;padding:12px 14px;border-radius:8px;background:var(--hover-bg);line-height:1.8}.quiz-feedback.show{display:block}
 .kotoba-box{margin-top:28px}.kotoba-tag{display:inline-block;border:1.5px solid var(--text);border-radius:6px;padding:0 10px;font-weight:bold}.kotoba-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 24px;line-height:2.2;margin-top:8px}.kotoba-item .gloss{color:var(--text-muted);font-size:.9rem;margin-left:.75em}
 .note-ref{font-size:.65em;color:var(--text-muted)}.footnotes{display:flex;flex-wrap:wrap;gap:0 24px;font-size:.95rem;line-height:2.4;color:var(--text-muted);margin-top:8px}
-ruby.furigana-word{user-select:none;ruby-position:over;cursor:pointer}ruby.furigana-word rt{visibility:hidden;opacity:0;color:var(--ruby-color);font-size:.65em;font-weight:bold;transition:opacity .18s}ruby.furigana-word.revealed rt{visibility:visible;opacity:1}
 .toolbar{display:flex;gap:8px;justify-content:flex-end;margin-bottom:16px;flex-wrap:wrap}.toolbar button{border:1px solid var(--border);background:white;border-radius:7px;padding:8px 12px;cursor:pointer;color:var(--text)}
 .spread.container{max-width:1200px}.spread-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}.spread-document{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto}.spread-questions .question-section{border-top:0;margin-top:18px;padding-top:0}
 .data-table{width:100%;border-collapse:collapse;line-height:1.65;font-size:1rem;margin:18px 0}.data-table th,.data-table td{border:1px solid var(--border);padding:9px 8px;text-align:center;vertical-align:middle}.data-table th{background:var(--hover-bg);font-weight:bold}.contact-block{width:fit-content;margin:22px 0 0 auto;line-height:1.8}
 @media(max-width:1099px){.spread-grid{grid-template-columns:1fr}.spread-document{position:static;max-height:none;overflow:visible}.container{margin:12px;padding:20px}.passage{font-size:1.12rem;line-height:2.5}}
-</style></head><body><main class="container spread">
+</style>
+<style>
+/* Furigana. Each kanji word is a ruby.furigana-word element; its reading stays hidden
+   until the word is tapped or clicked, or Show All is pressed. */
+
+/* Stops double-tap zoom on phones and tablets, so quick taps on words don't zoom the page.
+   Pinch zoom still works. */
+html {
+  touch-action: manipulation;
+}
+
+ruby.furigana-word {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  ruby-position: over;
+  border-radius: 4px;
+  transition: background-color .15s ease;
+}
+
+/* Answered options are locked with pointer-events: none; words in them can still be tapped. */
+.option-item.locked ruby.furigana-word {
+  pointer-events: auto;
+}
+
+/* Hidden with opacity only, not visibility, so the space above the kanji is part of the tap target. */
+ruby.furigana-word rt {
+  opacity: 0;
+  color: var(--ruby-color);
+  font-size: .65em;
+  font-weight: bold;
+  transition: opacity .18s ease-in-out;
+}
+
+ruby.furigana-word.revealed rt {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  ruby.furigana-word:hover {
+    background-color: var(--hover-bg);
+  }
+}
+</style>
+<script>
+// Furigana controls. Tap or click a word to show or hide its reading. The #showAllBtn
+// and #hideAllBtn buttons switch every word on the page.
+(() => {
+  const WORD = 'ruby.furigana-word';
+  let allShown = false;
+
+  function setAll(shown) {
+    allShown = shown;
+    document.querySelectorAll(WORD).forEach(word => word.classList.toggle('revealed', shown));
+  }
+
+  // Capture phase runs before the page's own handlers, so tapping a word inside an
+  // answer option shows its reading without choosing that option.
+  document.addEventListener('click', event => {
+    const word = event.target.closest(WORD);
+    if (word) {
+      if (word.closest('.option-item')) event.stopPropagation();
+      word.classList.toggle('revealed');
+    } else if (event.target.closest('#showAllBtn')) {
+      setAll(true);
+    } else if (event.target.closest('#hideAllBtn')) {
+      setAll(false);
+    }
+  }, true);
+
+  // Words added after the page loads (such as an answer explanation) follow Show All.
+  new MutationObserver(mutations => {
+    if (!allShown) return;
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (node.nodeType !== Node.ELEMENT_NODE) continue;
+        if (node.matches(WORD)) node.classList.add('revealed');
+        node.querySelectorAll(WORD).forEach(word => word.classList.add('revealed'));
+      }
+    }
+  }).observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+</head><body><main class="container spread">
 <div class="toolbar"><button id="showAllBtn" type="button">Show All Furigana</button><button id="hideAllBtn" type="button">Hide All Furigana</button></div>
 <div class="spread-grid"><section class="spread-questions"><header class="problem-header"><div class="type-tag"><ruby class="furigana-word">情報検索<rt>じょうほうけんさく</rt></ruby>1（<ruby class="furigana-word">案内<rt>あんない</rt></ruby>）</div><div class="problem-title">もんだい8</div>
 <p class="instruction"><ruby class="furigana-word">右<rt>みぎ</rt></ruby>のページの「<ruby class="furigana-word">一緒<rt>いっしょ</rt></ruby>にそばを<ruby class="furigana-word">作りません<rt>つくりません</rt></ruby>か」のお<ruby class="furigana-word">知<rt>し</rt></ruby>らせを<ruby class="furigana-word">見<rt>み</rt></ruby>て、<ruby class="furigana-word">質問に<rt>しつもんに</rt></ruby><ruby class="furigana-word">答え<rt>こたえ</rt></ruby>てください。<ruby class="furigana-word">答え<rt>こたえ</rt></ruby>は、1・2・3・4から、いちばんいいものを1つ<ruby class="furigana-word">選んで<rt>えらんで</rt></ruby>ください。</p></header><section class="question-section"><div class="question-block" data-q="1"><div class="question-title"><ruby class="furigana-word">問<rt>と</rt></ruby>い　グエンさんはOO<ruby class="furigana-word">市<rt>し</rt></ruby>の<ruby class="furigana-word">学校<rt>がっこう</rt></ruby>に<ruby class="furigana-word">通う<rt>かよう</rt></ruby>23<ruby class="furigana-word">歳<rt>さい</rt></ruby>の<ruby class="furigana-word">留学生<rt>りゅうがくせい</rt></ruby>です。そば<ruby class="furigana-word">作り<rt>づくり</rt></ruby>に<ruby class="furigana-word">参加したい<rt>さんかしたい</rt></ruby>です。きょうは15<ruby class="furigana-word">日<rt>にち</rt></ruby>です。どうやって<ruby class="furigana-word">申し込みます<rt>もうしこみます</rt></ruby>か。</div>
@@ -46,27 +128,6 @@ ruby.furigana-word{user-select:none;ruby-position:over;cursor:pointer}ruby.furig
 <div class="contact-block"><ruby class="furigana-word">問い合わせ先<rt>といあわせさき</rt></ruby>：OO<ruby class="furigana-word">市<rt>し</rt></ruby><ruby class="furigana-word">市民センター<rt>しみんセンター</rt></ruby>　<ruby class="furigana-word">担当<rt>たんとう</rt></ruby>：<ruby class="furigana-word">山本<rt>やまもと</rt></ruby><br/>〒111-2222　OO<ruby class="furigana-word">市<rt>し</rt></ruby>△△<ruby class="furigana-word">町<rt>まち</rt></ruby>1−2−3<br/>TEL：03-1111-44XX<br/>center222@mmm.com</div>
 </div></section><div class="footnotes"><span>(<ruby class="furigana-word">注<rt>ちゅう</rt></ruby>) <ruby class="furigana-word">調理室<rt>ちょうりしつ</rt></ruby>：Kitchen</span></div></section></div></main><script>
 const explanations = {"1": "対象には「OO市の学校に通っている人」が含まれるので、23歳の留学生も参加できます。申し込みは前日（19日）までに市民センターへ行います。電話でも受け付けますが、費用は前日までに払う必要があります。メールやはがきは不可です。したがって3です。"};
-// Furigana reveal: event delegation handles every ruby word, including nested rt/text targets.
-function toggleRubyReveal(node) { if (node) node.classList.toggle('revealed'); }
-document.addEventListener('dblclick', (event) => {
-  const ruby = event.target.closest?.('ruby.furigana-word');
-  if (ruby) { event.preventDefault(); toggleRubyReveal(ruby); }
-});
-let lastRubyTap = { node: null, time: 0, x: 0, y: 0 };
-document.addEventListener('pointerup', (event) => {
-  if (event.pointerType !== 'touch') return;
-  const ruby = event.target.closest?.('ruby.furigana-word');
-  if (!ruby) { lastRubyTap.node = null; return; }
-  const now = Date.now();
-  if (lastRubyTap.node === ruby && now-lastRubyTap.time < 500 && Math.hypot(event.clientX-lastRubyTap.x,event.clientY-lastRubyTap.y)<32) { toggleRubyReveal(ruby); lastRubyTap={node:null,time:0,x:0,y:0}; }
-  else lastRubyTap={node:ruby,time:now,x:event.clientX,y:event.clientY};
-});
-document.getElementById('showAllBtn')?.addEventListener('click',()=>{
-  document.querySelectorAll('ruby.furigana-word').forEach(n=>n.classList.add('revealed'));
-});
-document.getElementById('hideAllBtn')?.addEventListener('click',()=>{
-  document.querySelectorAll('ruby.furigana-word').forEach(n=>n.classList.remove('revealed'));
-});
 document.querySelectorAll('.question-block').forEach(block=>{
   const options=[...block.querySelectorAll('.option-item')];
   options.forEach(opt=>opt.addEventListener('click',()=>{

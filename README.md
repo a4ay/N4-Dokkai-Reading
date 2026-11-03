@@ -48,7 +48,9 @@ Dokkai/
 
 When writing a new page, keep these parts from the existing pages so the furigana and quiz work:
 
-- **Furigana:** wrap each kanji word as `<ruby class="furigana-word">漢字<rt>かんじ</rt></ruby>`. Readings are hidden until the word is double-clicked or **Show All** is pressed.
+- **Furigana:** wrap each kanji word as `<ruby class="furigana-word">漢字<rt>かんじ</rt></ruby>`. Readings are hidden until the word is tapped or clicked, or **Show All** is pressed. When a number changes the reading, put the number inside the ruby: `<ruby class="furigana-word">20日<rt>はつか</rt></ruby>`.
+- **Furigana code:** keep the furigana `<style>` and `<script>` block in the page's `<head>` (it starts with `/* Furigana.`). Every page has its own identical copy so that pages don't depend on each other; copy it unchanged from any existing page, and when you change it, change it on every page.
+- **Show All / Hide All:** the buttons need `id="showAllBtn"` and `id="hideAllBtn"`.
 - **Quiz options:** each answer is an `<li class="option-item">` with `data-correct="true"` on the right answer and `data-correct="false"` on the others.
 - **Explanation:** set `explanationText` in the page's script to the explanation shown after an answer is chosen.
 - **Relative paths:** pages live in `pages/`, so a link back to the index or to a top-level file needs `../`, for example `<a href="../index.html">`.

@@ -25,11 +25,91 @@ button:hover{background:var(--hover-bg)}button:focus-visible,.option-item:focus-
 .quiz-feedback.show{display:block}.kotoba-box{margin-top:28px}.kotoba-tag{display:inline-block;border:1.5px solid var(--text);border-radius:6px;padding:0 10px;font-weight:bold}
 .kotoba-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 20px;line-height:2.3;margin-top:8px}
 .kotoba-item .gloss{color:var(--text-muted);font-size:.82rem;margin-left:.5em}
-ruby.furigana-word{user-select:none;cursor:pointer;ruby-position:over}
-ruby.furigana-word rt{visibility:hidden;opacity:0;color:var(--ruby-color);font-size:.65em;font-weight:bold;transition:opacity .18s ease-in-out}
-ruby.furigana-word.revealed rt{visibility:visible;opacity:1}
 @media(max-width:600px){.container{margin:0;padding:20px 16px;border-radius:0}.passage{font-size:1.05rem;padding-right:2rem}.ln::after{right:-1.8rem}}
-</style></head><body>
+</style>
+<style>
+/* Furigana. Each kanji word is a ruby.furigana-word element; its reading stays hidden
+   until the word is tapped or clicked, or Show All is pressed. */
+
+/* Stops double-tap zoom on phones and tablets, so quick taps on words don't zoom the page.
+   Pinch zoom still works. */
+html {
+  touch-action: manipulation;
+}
+
+ruby.furigana-word {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  ruby-position: over;
+  border-radius: 4px;
+  transition: background-color .15s ease;
+}
+
+/* Answered options are locked with pointer-events: none; words in them can still be tapped. */
+.option-item.locked ruby.furigana-word {
+  pointer-events: auto;
+}
+
+/* Hidden with opacity only, not visibility, so the space above the kanji is part of the tap target. */
+ruby.furigana-word rt {
+  opacity: 0;
+  color: var(--ruby-color);
+  font-size: .65em;
+  font-weight: bold;
+  transition: opacity .18s ease-in-out;
+}
+
+ruby.furigana-word.revealed rt {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  ruby.furigana-word:hover {
+    background-color: var(--hover-bg);
+  }
+}
+</style>
+<script>
+// Furigana controls. Tap or click a word to show or hide its reading. The #showAllBtn
+// and #hideAllBtn buttons switch every word on the page.
+(() => {
+  const WORD = 'ruby.furigana-word';
+  let allShown = false;
+
+  function setAll(shown) {
+    allShown = shown;
+    document.querySelectorAll(WORD).forEach(word => word.classList.toggle('revealed', shown));
+  }
+
+  // Capture phase runs before the page's own handlers, so tapping a word inside an
+  // answer option shows its reading without choosing that option.
+  document.addEventListener('click', event => {
+    const word = event.target.closest(WORD);
+    if (word) {
+      if (word.closest('.option-item')) event.stopPropagation();
+      word.classList.toggle('revealed');
+    } else if (event.target.closest('#showAllBtn')) {
+      setAll(true);
+    } else if (event.target.closest('#hideAllBtn')) {
+      setAll(false);
+    }
+  }, true);
+
+  // Words added after the page loads (such as an answer explanation) follow Show All.
+  new MutationObserver(mutations => {
+    if (!allShown) return;
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (node.nodeType !== Node.ELEMENT_NODE) continue;
+        if (node.matches(WORD)) node.classList.add('revealed');
+        node.querySelectorAll(WORD).forEach(word => word.classList.add('revealed'));
+      }
+    }
+  }).observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+</head><body>
 <main class="container">
 <div class="toolbar"><button id="showAllBtn" type="button">Show All Furigana</button><button id="hideAllBtn" type="button">Hide All Furigana</button></div>
 <header class="problem-header"><div class="type-tag">エッセイ</div><div class="problem-title">もんだい 15</div>
@@ -43,18 +123,6 @@ ruby.furigana-word.revealed rt{visibility:visible;opacity:1}
 </main>
 <script>window.explanations={"1":"正解は4です。本文に「私は聞いていると眠くなってしまいます」とあります。1は食堂に集められることへの不満とは書かれておらず、2はバイオリンを習っていたときの話を加藤さんがしています。3はケーキは「おいしい」と明記されています。"};</script><script>
 document.addEventListener('DOMContentLoaded',()=>{
-  const words=[...document.querySelectorAll('ruby.furigana-word')];
-  words.forEach(node=>{
-    node.addEventListener('dblclick',event=>{
-      event.preventDefault();
-      node.classList.toggle('revealed');
-    });
-    node.setAttribute('title','Double-click to show or hide furigana');
-  });
-  const show=document.getElementById('showAllBtn');
-  const hide=document.getElementById('hideAllBtn');
-  if(show) show.addEventListener('click',()=>words.forEach(node=>node.classList.add('revealed')));
-  if(hide) hide.addEventListener('click',()=>words.forEach(node=>node.classList.remove('revealed')));
   document.querySelectorAll('.question-block').forEach(block=>{
     const options=[...block.querySelectorAll('.option-item')];
     options.forEach(opt=>opt.addEventListener('click',()=>{
